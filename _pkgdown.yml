@@ -1,0 +1,27 @@
+url: https://hub.analythium.io/deps
+
+home:
+  title: "deps: Dependency Management with Code Decoration"
+  description: |
+    Dependency management with code decoration.
+
+template:
+  bootstrap: 5
+  includes:
+    in_header: |
+      <script src="https://cdn.usefathom.com/script.js" data-site="XXTESXHY" defer></script>
+      <link rel="icon" href="https://hub.analythium.io/assets/logo/grays/favicon.ico" />
+
+navbar:
+  structure:
+    right: [search, twitter, github]
+  components:
+    twitter:
+      icon: fa-twitter
+      href: http://twitter.com/analythium
+      aria-label: Twitter
+    github:
+      icon: fa-github
+      href: http://github.com/analythium
+      aria-label: GitHub
+
