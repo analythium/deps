@@ -4,7 +4,14 @@
 \alias{install}
 \title{Create a Dependencies JSON File}
 \usage{
-install(dir = getwd(), file = "dependencies.json", upgrade = "never", ...)
+install(
+  dir = getwd(),
+  file = "dependencies.json",
+  upgrade = "never",
+  cleanup = TRUE,
+  timeout = 300L,
+  ...
+)
 }
 \arguments{
 \item{dir}{Path to the directory where the JSON file should be written to.}
@@ -12,6 +19,10 @@ install(dir = getwd(), file = "dependencies.json", upgrade = "never", ...)
 \item{file}{The name of the file to be save, default is \code{"dependencies.json"}. If the file is not found in \code{dir}, \code{create()} is called.}
 
 \item{upgrade}{Should package dependencies be upgraded? Argument passed to remotes functions.}
+
+\item{cleanup}{Logical, clean up files created by \code{create()} when \code{file} does not exist.}
+
+\item{timeout}{Integer, timeout for file downloads (default 60 seconds can be short).}
 
 \item{...}{Other argument passed to remotes functions.}
 }

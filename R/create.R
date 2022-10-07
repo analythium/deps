@@ -15,7 +15,7 @@
 #' cat(readLines(file.path(out, "dependencies.json")), sep = "\n")
 #' unlink(file.path(out, "dependencies.json"))
 #'
-#' @return Returns `NULL` invisibly. The side effect is a JSON file written to the hard drive.
+#' @return Invisibly returns the list of file names that were created. The side effect is a JSON (and possibly a text for system requirements) file written to the hard drive.
 #' @export
 create <- function(
     dir = getwd(),
@@ -26,6 +26,7 @@ create <- function(
     installed = c("base", "recommended"),
     overwrite = TRUE
 ) {
+    o <- character(0L)
     d <- get_deps(
         dir = dir,
         platform = platform,
@@ -35,6 +36,7 @@ create <- function(
         dir = output,
         file = file,
         overwrite = overwrite)
+    o <- c(o, file.path(output, file))
     if (sysreqs) {
         tmp <- strsplit(file, "\\.")[[1L]]
         file2 <- paste0(paste(tmp[-length(tmp)], sep="."), ".txt")
@@ -43,5 +45,7 @@ create <- function(
             dir = output,
             file = file2,
             overwrite = overwrite)
+        o <- c(o, file.path(output, file2))
     }
+    invisible(o)
 }

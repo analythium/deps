@@ -14,6 +14,8 @@
 #' @param dir Path to the directory where the JSON file should be written to.
 #' @param file The name of the file to be save, default is `"dependencies.json"`. If the file is not found in `dir`, `create()` is called.
 #' @param upgrade Should package dependencies be upgraded? Argument passed to remotes functions.
+#' @param cleanup Logical, clean up files created by `create()` when `file` does not exist.
+#' @param timeout Integer, timeout for file downloads (default 60 seconds can be short).
 #' @param ...  Other argument passed to remotes functions.
 #'
 #' @examples
@@ -31,18 +33,28 @@ install <- function(
     dir = getwd(),
     file = "dependencies.json",
     upgrade = "never",
+    cleanup = TRUE,
+    timeout = 300L,
     ...
 ) {
+    uto <- suppressWarnings(
+        as.integer(Sys.getenv("R_DEFAULT_INTERNET_TIMEOUT")))
+    if (is.na(uto))
+        uto <- timeout
+    oo <- options(timeout = max(uto, timeout, getOption("timeout")))
+    on.exit(options(oo), add = TRUE)
     created <- file.exists(file.path(dir, file))
     if (!created) {
-        create(dir = dir, file = file)
+        dfile <- create(dir = dir, file = file)
+        if (cleanup)
+            on.exit(unlink(dfile))
     }
     d <- jsonlite::fromJSON(readLines(file.path(dir, file)))
     p <- d$packages[!is.na(d$packages$source),]
     r <- p$repos
     if (length(r) > 0L) {
         o <- getOption("repos")
-        on.exit(options("repos" = o))
+        on.exit(options("repos" = o), add = TRUE)
         options("repos" = c(o, r))
     }
     desc <- c("Imports:\n  ",

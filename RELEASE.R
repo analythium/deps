@@ -13,6 +13,9 @@ spelling::update_wordlist()
 # local checks
 devtools::check()
 
+# install
+devtools::install()
+
 # multi-arch checks
 library(rhub)
 #validate_email("peter@analythium.io")

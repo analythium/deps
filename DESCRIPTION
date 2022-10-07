@@ -22,7 +22,7 @@ Imports:
   remotes
 Suggests:
   rmarkdown
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 BugReports: https://github.com/analythium/deps/issues

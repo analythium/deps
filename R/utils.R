@@ -9,9 +9,11 @@ deps_list_r <- function(
     path = ".",
     ext = c("R", "Rmd")
 ) {
-    fl <- list.files(path, full.names = TRUE)
-    ext  <- tolower(tools::file_ext(fl))
-    fl[ext %in% tolower(ext)]
+    fl <- list.files(path,
+        full.names = TRUE,
+        recursive = TRUE)
+    fl_ext  <- tolower(tools::file_ext(fl))
+    fl[fl_ext %in% tolower(ext)]
 }
 
 #' Find tag
@@ -287,4 +289,40 @@ rversions <- function() {
     class = c("POSIXct", "POSIXt"), tzone = "UTC")),
     class = "data.frame",
     row.names = c(NA, -128L))
+}
+
+install_any <- function(x, ...) {
+  ## parse installation sources: (source, pkg)
+  x <- strsplit(x, "::")
+  for (i in which(sapply(x, length) < 2L)) {
+    if (grepl("/", x[[i]])) {
+      x[[i]] <- c("github", x[[i]])
+    } else {
+      if (grepl("@", x[[i]])) {
+        tmp <- strsplit(x[[i]], "@")[[1L]]
+        x[[i]] <- c("version", tmp[1L])
+        attr(x[[i]], "version") <- tmp[2L]
+      } else {
+        x[[i]] <- c("cran", x[[i]])
+      }
+    }
+  }
+  ## install packages
+  f <- function(z, ...) {
+    switch(z[1L],
+      "cran" = remotes::install_cran(z[2L], ...),
+      "version" = remotes::install_version(z[2L], attr(z, "version"), ...),
+      "github" = remotes::install_github(z[2L], ...),
+      "dev" = remotes::install_dev(z[2L], ...),
+      "bioc" = remotes::install_bioc(z[2L], ...),
+      "bitbucket" = remotes::install_bitbucket(z[2L], ...),
+      "gitlab" = remotes::install_gitlab(z[2L], ...),
+      "git" = remotes::install_git(z[2L], ...),
+      "local" = remotes::install_local(z[2L], ...),
+      "svn" = remotes::install_svn(z[2L], ...),
+      "url" = remotes::install_url(z[2L], ...),
+      stop(sprintf("unsupported installation sources: %s", z[1L])))
+  }
+  lapply(x, f, ...)
+  invisible(NULL)
 }
