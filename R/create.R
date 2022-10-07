@@ -15,7 +15,8 @@
 #' cat(readLines(file.path(out, "dependencies.json")), sep = "\n")
 #' unlink(file.path(out, "dependencies.json"))
 #'
-#' @return Invisibly returns the list of file names that were created. The side effect is a JSON (and possibly a text for system requirements) file written to the hard drive.
+#' @return Invisibly returns the list of file names that were created. The side effect is a JSON (and possibly a text for system requirements) file written to the hard drive. The function fails when there are no R related files in `dir`.
+#' 
 #' @export
 create <- function(
     dir = getwd(),
