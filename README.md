@@ -36,11 +36,12 @@ can surface these). A strict package focused workflow combined with a
 “no breaking changes” philosophy to version requirements, leading to
 leaner installation.
 
-What if you wanted to combine the best of both approaches? A loosely
-defined project with a just strict-enough versioning requirement. All
-this without having to write a `DESCRIPTION` file. Why would you need a
-`DESCRIPTION` when you have no package and it won’t let you pin an exact
-the package version or to specify alternate CRAN-like repositories?
+What if you wanted to combined the best of both approaches? A loosely
+defined project with just strict-enough version requirements. All this
+without having to write a `DESCRIPTION` file. Why would you need a
+`DESCRIPTION` when you have no package and it won’t let you pin the
+package version or to specify alternate CRAN-like repositories or 
+[checkpoint](https://CRAN.R-project.org/package=checkpoint)?
 
 The answer is deps. You add comments to your code, deps does the rest:
 
