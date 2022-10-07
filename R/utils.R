@@ -1,19 +1,42 @@
-#'List R files
+#' Does the file contain Rscript shebang
+#'
+#' @param file Single file name.
+#' 
+#' @return Logical.
+#' @noRd
+is_rscript <- function(
+    file
+) {
+    l1 <- suppressWarnings(readLines(file, 1L))
+    isTRUE(startsWith(l1, "#!")) && isTRUE(grepl("Rscript", l1))
+}
+
+#' List R files
 #'
 #' @param path Path.
 #' @param ext File extensions, case insensitive.
+#' @param shebang Should files with no extension checked for an Rscript shebang.
 #'
 #' @return Character vector with file names.
 #' @noRd
 deps_list_r <- function(
     path = ".",
-    ext = c("R", "Rmd")
+    ext = c("R", "Rmd", "Rnw"),
+    shebang = TRUE
 ) {
     fl <- list.files(path,
         full.names = TRUE,
         recursive = TRUE)
     fl_ext  <- tolower(tools::file_ext(fl))
-    fl[fl_ext %in% tolower(ext)]
+    i <- fl_ext %in% tolower(ext)
+    if (shebang) {
+        j <- which(fl_ext == "")
+        if (length(j) > 0L) {
+            k <- sapply(fl[j], is_rscript)
+            i[j[k]] <- TRUE
+        }
+    }
+    fl[i]
 }
 
 #' Find tag
@@ -81,7 +104,10 @@ get_deps <- function(
     installed = c("base", "recommended"),
     dev = TRUE
 ) {
-    x <- unlist(lapply(deps_list_r(dir), readLines))
+    rfl <- deps_list_r(dir)
+    if (length(rfl) < 1L)
+        stop("No R related files found.")
+    x <- unlist(lapply(rfl, readLines))
     x <- x[grep("^#'\\s*@", x)]
     tagged_deps <- list(
         local  = process_tag(x, "local"),
