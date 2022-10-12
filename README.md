@@ -1,6 +1,6 @@
 # deps
 
-> Dependency Management with roxygen-style Comments
+> Dependency Management with Roxygen-style Comments
 
 Manage your source code dependencies by decorating your existing R code
 with special, roxygen-style comments.
