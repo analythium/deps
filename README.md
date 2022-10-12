@@ -175,6 +175,12 @@ installation:
 #' @repos http://cran.r-project.org,https://psolymos.r-universe.dev
 ```
 
+Use the `@repos` tag to set an [MRAN](https://mran.microsoft.com/documents/rro/reproducibility) checkpoint:
+
+``` r
+#' @repos https://mran.microsoft.com/snapshot/2020-01-01
+```
+
 #### Versioned packages
 
 When CRAN packages require specific a version, use the `@ver` tag
