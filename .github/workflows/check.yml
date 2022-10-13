@@ -1,0 +1,36 @@
+on:
+  push:
+    branches:
+      - main
+
+name: check
+
+jobs:
+  deploy:
+    runs-on: macOS-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: R setup
+        uses: r-lib/actions/setup-r@v1
+
+      - name: Install sysreqs
+        run: brew install pandoc harfbuzz fribidi
+
+      - name: Install dependencies
+        run: |
+          Rscript -e 'install.packages(c("pkgdown", "devtools", "textshaping"))'
+          Rscript -e 'devtools::install_dev_deps()'
+
+      - name: Check package
+        run: Rscript -e 'devtools::check()'
+
+      - name: Build site
+        run: Rscript -e 'pkgdown::build_site()'
+
+      - name: Deploy site
+        uses: JamesIves/github-pages-deploy-action@4.0.0
+        with:
+          branch: gh-pages
+          folder: docs

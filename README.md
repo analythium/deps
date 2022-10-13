@@ -1,6 +1,6 @@
 # deps
 
-> Dependency Management with Roxygen-style Comments
+> Dependency Management with roxygen-style Comments
 
 Manage your source code dependencies by decorating your existing R code
 with special, roxygen-style comments.
@@ -8,7 +8,7 @@ with special, roxygen-style comments.
 [![Build
 status](https://github.com/analythium/deps/actions/workflows/check.yml/badge.svg)](https://github.com/analythium/deps/actions)
 
-## Why?
+## Why this package?
 
 There are many similar packages out there, some aimed at reproducibility
 ([packrat](https://CRAN.R-project.org/package=packrat),
@@ -21,29 +21,30 @@ dependency management
 
 **So why do we need another one?**
 
-Full reproducibility is a nice and heavyweight aspiration that either
-needs locally cached package libraries, or an accurate snapshot
-mirroring the local system (i.e. where exactly the package was installed
+Full reproducibility is an important and heavyweight aspiration that
+either needs locally cached package libraries, or an accurate snapshot
+mirroring the local system (i.e. exactly where the package was installed
 from). Full reproducibility is often required for reports, markdown
-based documents, scripts. A loosely defined project is combined with
-strict version requirements, often err on on the side of more
-dependencies are safer.
+based documents, scripts. *A loosely defined project that is combined
+with strict versioning requirements, often erring on the side of “more
+dependencies are safer”.*
 
 As opposed to this, package-based development is the main use case for
-dependency management oriented packages. In this case exact versions are
-managed to the extent of avoiding breaking changes (given that testing
-can surface these). A strict package focused workflow combined with a
+dependency management oriented packages. In this case, exact versions
+are only managed to the extent of avoiding breaking changes (given that
+testing can surface these). *A package focused workflow combined with a
 “no breaking changes” philosophy to version requirements, leading to
-leaner installation.
+leaner installation.*
 
-What if you wanted to combined the best of both approaches? A loosely
-defined project with just strict-enough version requirements. All this
-without having to write a `DESCRIPTION` file. Why would you need a
-`DESCRIPTION` when you have no package and it won’t let you pin the
-package version or to specify alternate CRAN-like repositories or 
-[checkpoint](https://CRAN.R-project.org/package=checkpoint)?
+What if you wanted to combine the best of both approaches? *A loosely
+defined project with just strict-enough versioning requirements* – and
+all this without having to write a `DESCRIPTION` file. Because why would
+you need a `DESCRIPTION` file when you have no package? Also, a
+`DESCRIPTION` file won’t let you to pin an exact the package version or
+to specify alternate CRAN-like repositories…
 
-The answer is deps. You add comments to your code, deps does the rest:
+The answer is deps: **you add comments to your code, deps does the
+rest**.
 
 ``` r
 #' @remote analythium/rconfig@CRAN-v0.1.3
@@ -175,7 +176,9 @@ installation:
 #' @repos http://cran.r-project.org,https://psolymos.r-universe.dev
 ```
 
-Use the `@repos` tag to set an [MRAN](https://mran.microsoft.com/documents/rro/reproducibility) checkpoint:
+Use the `@repos` tag to set an
+[MRAN](https://mran.microsoft.com/documents/rro/reproducibility)
+checkpoint:
 
 ``` r
 #' @repos https://mran.microsoft.com/snapshot/2020-01-01
