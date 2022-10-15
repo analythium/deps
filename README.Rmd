@@ -35,8 +35,8 @@ There are many similar packages out there, some aimed at reproducibility
 [Require](https://CRAN.R-project.org/package=Require),
 [switchr](https://cran.r-project.org/package=switchr),
 [versions](https://CRAN.R-project.org/package=versions),
-[renv](https://CRAN.R-project.org/package=renv)),
-[capsule](https://github.com/MilesMcBain/capsule).
+[renv](https://CRAN.R-project.org/package=renv),
+[capsule](https://github.com/MilesMcBain/capsule)).
 Others are focused on dependency management
 ([remotes](https://CRAN.R-project.org/package=remotes),
 [pak](https://CRAN.R-project.org/package=pak)).
