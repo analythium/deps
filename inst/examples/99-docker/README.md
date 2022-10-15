@@ -6,7 +6,7 @@ Use the Dockerfile in this folder if you already have
 the `dependencies.json` file from `deps::create()`:
 
 ```bash
-cd inst/examples/02-docker
+cd inst/examples/99-docker
 
 # change this as needed if you want to `docker push`
 export TAG=analythium/deps-shiny-example:v1

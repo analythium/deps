@@ -8,14 +8,15 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       sliderInput("n", "Sample size",
-        min=2, max=10^3, value=200
+        min = 2, max = 10^3, value = 200
       ),
       sliderInput("r", "Correlation",
-        min = -1, max = 1, value = 0, step=0.05
+        min = -1, max = 1, value = 0, step = 0.05
       )
     ),
     mainPanel(
-      rglwidgetOutput("plot", width="500px", height="500px")
+      rglwidgetOutput("plot",
+        width = "500px", height = "500px")
     )
   )
 )
@@ -32,8 +33,8 @@ server <- function(input, output) {
     k <- kde2d(d[,1], d[,2])
     try(close3d())
     persp3d(k$x, k$y, k$z,
-      ann=FALSE, axes=FALSE,
-      xlab="", ylab="", zlab="",
+      ann = FALSE, axes = FALSE,
+      xlab = "", ylab = "", zlab = "",
       aspect = c(1, 1, 0.5), col = "lightblue")
     rglwidget()
   })
