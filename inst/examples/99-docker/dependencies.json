@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "rver": "4.2.1",
+  "repos": [],
+  "sysreqs": ["libgl1-mesa-dev", "libglu1-mesa-dev", "libpng-dev", "pandoc pandoc-citeproc", "zlib1g-dev"],
+  "packages": [
+    {
+      "package": "MASS",
+      "installed": true,
+      "dev": false
+    },
+    {
+      "package": "rgl",
+      "installed": false,
+      "dev": false,
+      "source": "cran"
+    },
+    {
+      "package": "shiny",
+      "installed": false,
+      "dev": false,
+      "source": "cran"
+    }
+  ]
+}
