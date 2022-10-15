@@ -8,13 +8,20 @@ with special, roxygen-style comments.
 [![Build
 status](https://github.com/analythium/deps/actions/workflows/check.yml/badge.svg)](https://github.com/analythium/deps/actions)
 
+``` r
+#' @remote analythium/deps
+remotes::install_github("analythium/deps")
+```
+
 ## Why this package?
 
 There are many similar packages out there, some aimed at reproducibility
 ([packrat](https://CRAN.R-project.org/package=packrat),
 [Require](https://CRAN.R-project.org/package=Require),
+[switchr](https://cran.r-project.org/package=switchr),
 [versions](https://CRAN.R-project.org/package=versions),
-[renv](https://CRAN.R-project.org/package=renv)), others are focused on
+[renv](https://CRAN.R-project.org/package=renv)),
+[capsule](https://github.com/MilesMcBain/capsule). Others are focused on
 dependency management
 ([remotes](https://CRAN.R-project.org/package=remotes),
 [pak](https://CRAN.R-project.org/package=pak)).

@@ -30,7 +30,7 @@ create(
 \item{overwrite}{Logical, should the \code{file} in the \code{output} directory be overwritten if exists?}
 }
 \value{
-Invisibly returns the list of file names that were created. The side effect is a JSON (and possibly a text for system requirements) file written to the hard drive.
+Invisibly returns the list of file names that were created. The side effect is a JSON (and possibly a text for system requirements) file written to the hard drive. The function fails when there are no R related files in \code{dir}.
 }
 \description{
 Create a Dependencies JSON File
