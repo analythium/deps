@@ -76,16 +76,19 @@
 </blockquote>
 <p>Manage your source code dependencies by decorating your existing R code with special, roxygen-style comments.</p>
 <p><a href="https://github.com/analythium/deps/actions" class="external-link"><img src="https://github.com/analythium/deps/actions/workflows/check.yml/badge.svg" alt="Build status"></a></p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#' @remote analythium/deps</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"analythium/deps"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="why-this-package">Why this package?<a class="anchor" aria-label="anchor" href="#why-this-package"></a>
 </h2>
-<p>There are many similar packages out there, some aimed at reproducibility (<a href="https://CRAN.R-project.org/package=packrat" class="external-link">packrat</a>, <a href="https://CRAN.R-project.org/package=Require" class="external-link">Require</a>, <a href="https://CRAN.R-project.org/package=versions" class="external-link">versions</a>, <a href="https://CRAN.R-project.org/package=renv" class="external-link">renv</a>), others are focused on dependency management (<a href="https://CRAN.R-project.org/package=remotes" class="external-link">remotes</a>, <a href="https://CRAN.R-project.org/package=pak" class="external-link">pak</a>).</p>
+<p>There are many similar packages out there, some aimed at reproducibility (<a href="https://CRAN.R-project.org/package=packrat" class="external-link">packrat</a>, <a href="https://CRAN.R-project.org/package=Require" class="external-link">Require</a>, <a href="https://cran.r-project.org/package=switchr" class="external-link">switchr</a>, <a href="https://CRAN.R-project.org/package=versions" class="external-link">versions</a>, <a href="https://CRAN.R-project.org/package=renv" class="external-link">renv</a>, <a href="https://github.com/MilesMcBain/capsule" class="external-link">capsule</a>). Others are focused on dependency management (<a href="https://CRAN.R-project.org/package=remotes" class="external-link">remotes</a>, <a href="https://CRAN.R-project.org/package=pak" class="external-link">pak</a>).</p>
 <p><strong>So why do we need another one?</strong></p>
 <p>Full reproducibility is an important and heavyweight aspiration that either needs locally cached package libraries, or an accurate snapshot mirroring the local system (i.e. exactly where the package was installed from). Full reproducibility is often required for reports, markdown based documents, scripts. <em>A loosely defined project that is combined with strict versioning requirements, often erring on the side of “more dependencies are safer”.</em></p>
 <p>As opposed to this, package-based development is the main use case for dependency management oriented packages. In this case, exact versions are only managed to the extent of avoiding breaking changes (given that testing can surface these). <em>A package focused workflow combined with a “no breaking changes” philosophy to version requirements, leading to leaner installation.</em></p>
 <p>What if you wanted to combine the best of both approaches? <em>A loosely defined project with just strict-enough versioning requirements</em> – and all this without having to write a <code>DESCRIPTION</code> file. Because why would you need a <code>DESCRIPTION</code> file when you have no package? Also, a <code>DESCRIPTION</code> file won’t let you to pin an exact the package version or to specify alternate CRAN-like repositories…</p>
 <p>The answer is deps: <strong>you add comments to your code, deps does the rest</strong>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @remote analythium/rconfig@CRAN-v0.1.3</span></span>
 <span><span class="fu">rconfig</span><span class="fu">::</span><span class="fu">config</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -108,7 +111,7 @@
 <h2 id="tags">Tags<a class="anchor" aria-label="anchor" href="#tags"></a>
 </h2>
 <p>Tags are part of the <a href="https://cran.r-project.org/package=roxygen2" class="external-link">roxygen-style comments</a>:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @&lt;tag&gt; &lt;parameter&gt;</span></span></code></pre></div>
 <p>where <code>#'</code> is followed by space, the tag starting with <code>@</code>, space, and some parameters.</p>
 <p>deps implements the following tags:</p>
@@ -165,7 +168,7 @@
 <h4 id="system-requirements">System requirements<a class="anchor" aria-label="anchor" href="#system-requirements"></a>
 </h4>
 <p>Known system requirements can be declared using the <code>@sys</code> tag, packages can be separated by commas:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @sys curl,git</span></span></code></pre></div>
 <p>These packages are added to the list of requirements identified by the <a href="https://sysreqs.r-hub.io" class="external-link">sysreqs.r-hub.io</a> database for the non-development packages.</p>
 </div>
@@ -173,7 +176,7 @@
 <h4 id="remote-sources">Remote sources<a class="anchor" aria-label="anchor" href="#remote-sources"></a>
 </h4>
 <p>Remotely sourced packages are declared using the <code>@remote</code>tag following the <a href="https://CRAN.R-project.org/package=remotes/vignettes/dependencies.html" class="external-link"><code>remotes</code></a> specifications:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @remote analythium/rconfig@CRAN-v0.1.3</span></span>
 <span><span class="fu">rconfig</span><span class="fu">::</span><span class="fu">config</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>This is effectively a version pinning for remotely sourced packages.</p>
@@ -182,11 +185,11 @@
 <h4 id="local-packages">Local packages<a class="anchor" aria-label="anchor" href="#local-packages"></a>
 </h4>
 <p>The <code>@local</code> tag can be used to provide a path to local directory, or compressed file (tar, zip, tar.gz, tar.bz2, tgz2, or tbz) to install packages from:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @local mypackage_0.1.0.tar.gz</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mypackage</span><span class="op">)</span></span></code></pre></div>
 <p>This is effectively the same as:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @remote local::mypackage_0.1.0.tar.gz</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mypackage</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -194,7 +197,7 @@
 <h4 id="development-packages">Development packages<a class="anchor" aria-label="anchor" href="#development-packages"></a>
 </h4>
 <p>Dev packages following the <code>@dev</code> decorator are excluded from installation, but are not removed if already installed:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @dev devtools,roxygen2</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -202,21 +205,21 @@
 <h4 id="alternative-repos">Alternative repos<a class="anchor" aria-label="anchor" href="#alternative-repos"></a>
 </h4>
 <p>Use the <code>@repo</code> tag to specify an alternative CRAN-like repository, e.g. from the <a href="https://r-universe.dev/" class="external-link">r-universe</a>:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @repo intrval https://psolymos.r-universe.dev</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/psolymos/intrval" class="external-link">intrval</a></span><span class="op">)</span></span></code></pre></div>
 <p>Use the <code>@repos</code> tag to set CRAN-like repositories for all package installation:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @repos http://cran.r-project.org,https://psolymos.r-universe.dev</span></span></code></pre></div>
 <p>Use the <code>@repos</code> tag to set an <a href="https://mran.microsoft.com/documents/rro/reproducibility" class="external-link">MRAN</a> checkpoint:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @repos https://mran.microsoft.com/snapshot/2020-01-01</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="versioned-packages">Versioned packages<a class="anchor" aria-label="anchor" href="#versioned-packages"></a>
 </h4>
 <p>When CRAN packages require specific a version, use the <code>@ver</code> tag according to the <a href="https://remotes.r-lib.org/reference/install_version.html" class="external-link"><code>remotes::install_version()</code></a> function specifications:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @ver mefa4 &gt;= 0.3-0</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/psolymos/mefa4" class="external-link">mefa4</a></span><span class="op">)</span></span></code></pre></div>
 </div>
