@@ -218,29 +218,6 @@ write_deps <- function(
     }
 }
 
-#' Write system requirements into text file
-#'
-#' @param x A dependency table from `get_deps()`.
-#' @param dir Directory to save the file into.
-#' @param file The file name to use.
-#' @param overwrite Should the file be overwritten if exists.
-#'
-#' @return `NULL` invisible. A file created as a side effect.
-#' @noRd
-write_sysreqs <- function(
-    x,
-    dir,
-    file = "dependencies.txt",
-    overwrite = TRUE
-) {
-    r <- attr(x, "sysreqs")
-    if (file.exists(file.path(dir, file)) && !overwrite) {
-        invisible(NULL)
-    } else {
-        write(paste(r, collapse = ' '), file.path(dir, file))
-    }
-}
-
 #' Get System Requirements
 #'
 #' @param pkg Character, packages for which system requirements are needed.
@@ -260,7 +237,12 @@ sysreqs <- function(pkg, platform = "DEB") {
             paste0(as.character(pkg), collapse = ",")),
         simplifyVector = FALSE)
     v <- unlist(j)
-    sort(unique(unname(v[grep(paste0("\\.", platform), names(v))])))
+    s <- sort(unique(unname(v[grep(paste0("\\.", platform), names(v))])))
+    if (!is.null(s)) {
+        s <- unlist(strsplit(s, "[[:space:]]"))
+        s <- sort(unique(unname(s[nchar(s) > 0])))
+    }
+    s
 }
 
 #' R versions

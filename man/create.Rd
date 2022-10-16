@@ -7,7 +7,6 @@
 create(
   dir = getwd(),
   file = "dependencies.json",
-  sysreqs = FALSE,
   output = dir,
   platform = "DEB",
   installed = c("base", "recommended"),
@@ -18,8 +17,6 @@ create(
 \item{dir}{Path to the directory where the files to be scanned are located.}
 
 \item{file}{The name of the file to be save, default is \code{"dependencies.json"}.}
-
-\item{sysreqs}{Logical, should system requirements be written in a separate file? Default same as \code{file} with \code{.txt} extension, i.e. \code{"dependencies.txt"}.}
 
 \item{output}{Path to the directory where JSON file should be written to.}
 
