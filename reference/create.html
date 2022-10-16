@@ -60,7 +60,6 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create</span><span class="op">(</span></span>
 <span>  dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  file <span class="op">=</span> <span class="st">"dependencies.json"</span>,</span>
-<span>  sysreqs <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  output <span class="op">=</span> <span class="va">dir</span>,</span>
 <span>  platform <span class="op">=</span> <span class="st">"DEB"</span>,</span>
 <span>  installed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"base"</span>, <span class="st">"recommended"</span><span class="op">)</span>,</span>
@@ -76,10 +75,6 @@
 
 <dt>file</dt>
 <dd><p>The name of the file to be save, default is <code>"dependencies.json"</code>.</p></dd>
-
-
-<dt>sysreqs</dt>
-<dd><p>Logical, should system requirements be written in a separate file? Default same as <code>file</code> with <code>.txt</code> extension, i.e. <code>"dependencies.txt"</code>.</p></dd>
 
 
 <dt>output</dt>
