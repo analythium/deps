@@ -24,6 +24,9 @@ Manage your source code dependencies by decorating your existing R code with spe
 [![Build status](https://github.com/analythium/deps/actions/workflows/check.yml/badge.svg)](https://github.com/analythium/deps/actions)
 
 ```R
+#' @repo sf https://analythium.r-universe.dev
+install.packages("deps", repos = "https://analythium.r-universe.dev")
+
 #' @remote analythium/deps
 remotes::install_github("analythium/deps")
 ```
