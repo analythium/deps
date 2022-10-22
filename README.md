@@ -9,6 +9,9 @@ with special, roxygen-style comments.
 status](https://github.com/analythium/deps/actions/workflows/check.yml/badge.svg)](https://github.com/analythium/deps/actions)
 
 ``` r
+#' @repo deps https://analythium.r-universe.dev
+install.packages("deps", repos = "https://analythium.r-universe.dev")
+
 #' @remote analythium/deps
 remotes::install_github("analythium/deps")
 ```
