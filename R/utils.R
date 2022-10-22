@@ -183,7 +183,7 @@ get_deps <- function(
     rvt <- rversions()
     rvt <- rvt[startsWith(rvt$version, rver),]
     if (nrow(rvt) < 1L)
-        stop("R version not valid")
+        stop(paste0("R version not valid: ", rver))
     rvt <- rvt[nrow(rvt),]
     attr(tb, "rver") <- rvt$version[1L]
 
