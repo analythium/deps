@@ -239,9 +239,25 @@
 <p><code><a href="reference/install.html">install()</a></code> will look for the <code>dependencies.json</code> file in the root of the project directory and perform dependency installation if the file exists. If the file does not exist, it uses <code><a href="reference/create.html">create()</a></code> to create that file before attempting installation.</p>
 </div>
 <div class="section level2">
+<h2 id="deps-cli">deps-cli<a class="anchor" aria-label="anchor" href="#deps-cli"></a>
+</h2>
+<p>A CLI example is given in <a href="./inst/examples/02-cli/"><code>inst/examples/02-cli</code></a>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> inst/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x /usr/local/bin/deps-cli</span></code></pre></div>
+<p>Now you can use it as explained in <code>deps-cli help</code>, e.g. analyze dependencies, install system and R dependencies in 1 line:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">deps-cli</span> create <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> sysreqs <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> install</span></code></pre></div>
+<p>In a Dockerfile you can then:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> inst/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">chmod</span> +x /usr/local/bin/deps-cli</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">deps-cli</span> create <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> sysreqs <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> install</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<p>See the <a href="./inst/examples/"><code>inst/examples</code></a> folder for examples.</p>
+<p>See the <a href="./inst/examples/"><code>inst/examples</code></a> folder for more examples.</p>
 </div>
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
