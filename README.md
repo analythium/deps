@@ -228,9 +228,37 @@ the project directory and perform dependency installation if the file
 exists. If the file does not exist, it uses `create()` to create that
 file before attempting installation.
 
+## deps-cli
+
+A CLI example is given in
+[`inst/examples/02-cli`](./inst/examples/02-cli/):
+
+``` bash
+cp inst/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli
+chmod +x /usr/local/bin/deps-cli
+```
+
+Now you can use it as explained in `deps-cli help`, e.g. analyze
+dependencies, install system and R dependencies in 1 line:
+
+``` bash
+deps-cli create && deps-cli sysreqs && deps-cli install
+```
+
+In a Dockerfile you can then:
+
+``` dockerfile
+...
+COPY inst/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli
+RUN chmod +x /usr/local/bin/deps-cli
+...
+RUN deps-cli create && deps-cli sysreqs && deps-cli install
+...
+```
+
 ## Examples
 
-See the [`inst/examples`](./inst/examples/) folder for examples.
+See the [`inst/examples`](./inst/examples/) folder for more examples.
 
 ## License
 
