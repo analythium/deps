@@ -36,6 +36,7 @@ Commands:
   deps-cli create       Scan DIR and write dependencies.json
   deps-cli sysreqs      Install system requirements
   deps-cli install      Install R package dependencies
+  deps-cli all          create+sysreqs+install in one
 
 Options:
   --dir DIR             Directory to scan, defaults to .
@@ -47,7 +48,7 @@ Examples:
   deps-cli create
   deps-cli sysreqs
   deps-cli install --dir /root/app
-  deps-cli install --dir /root/app --upgrade
+  deps-cli all --dir /root/app --upgrade
 
 '
 
@@ -101,15 +102,25 @@ install <- function(DIR, UPGRADE, ...) {
     invisible(NULL)
 }
 
+all <- function(DIR, UPGRADE, ...) {
+    if (!file.exists(file.path(DIR, "dependencies.json")))
+        on.exit(unlink(file.exists(file.path(DIR, "dependencies.json"))))
+    create(DIR)
+    sysreqs(DIR)
+    install(DIR, UPGRADE, ...)
+    invisible(NULL)
+}
+
 FUN <- list(
     "help"    = help,
     "version" = version,
     "create"  = create,
     "sysreqs" = sysreqs,
-    "install" = install)
+    "install" = install,
+    "all"     = all)
 
 if (length(CMD) != 1L || !(CMD %in% names(FUN)))
-    stop(paste("\nCommand", CMD, " not found, see deps-cli help for available commands.\n"),
+    stop("\nCommand not found, see deps-cli help for available commands.\n",
         call. = FALSE)
 
 FUN[[CMD]](DIR, UPGRADE)
