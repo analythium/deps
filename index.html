@@ -247,12 +247,16 @@
 <p>Now you can use it as explained in <code>deps-cli help</code>, e.g. analyze dependencies, install system and R dependencies in 1 line:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">deps-cli</span> create <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> sysreqs <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> install</span></code></pre></div>
 <p>In a Dockerfile you can then:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> inst/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">chmod</span> +x /usr/local/bin/deps-cli</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">deps-cli</span> create <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> sysreqs <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> install</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ...</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">R</span> <span class="at">-q</span> <span class="at">-e</span> <span class="st">"install.packages(c('rconfig', 'deps', 'remotes', 'pak', 'renv'), repos = c('https://cloud.r-project.org', 'https://analythium.r-universe.dev'))"</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">cp</span> <span class="at">-p</span> <span class="va">$(</span><span class="ex">R</span> RHOME<span class="va">)</span>/library/deps/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">chmod</span> +x /usr/local/bin/deps-cli</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> ... <span class="co"># your files</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">deps-cli</span> create <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> sysreqs <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> install</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
