@@ -47,7 +47,7 @@ install <- function(
     if (!created) {
         dfile <- create(dir = dir, file = file)
         if (cleanup)
-            on.exit(unlink(dfile))
+            on.exit(unlink(dfile), add = TRUE)
     }
     d <- jsonlite::fromJSON(readLines(file.path(dir, file)))
     p <- d$packages[!is.na(d$packages$source),]
