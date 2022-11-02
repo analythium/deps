@@ -248,10 +248,14 @@ deps-cli create && deps-cli sysreqs && deps-cli install
 In a Dockerfile you can then:
 
 ``` dockerfile
-...
-COPY inst/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli
+FROM ...
+
+RUN R -q -e "install.packages(c('rconfig', 'deps', 'remotes', 'pak', 'renv'), repos = c('https://cloud.r-project.org', 'https://analythium.r-universe.dev'))"
+RUN cp -p $(R RHOME)/library/deps/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli
 RUN chmod +x /usr/local/bin/deps-cli
-...
+
+COPY ... # your files
+
 RUN deps-cli create && deps-cli sysreqs && deps-cli install
 ...
 ```
