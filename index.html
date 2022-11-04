@@ -244,22 +244,54 @@
 <p>A CLI example is given in <a href="./inst/examples/02-cli/"><code>inst/examples/02-cli</code></a>:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> inst/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x /usr/local/bin/deps-cli</span></code></pre></div>
-<p>Now you can use it as explained in <code>deps-cli help</code>, e.g. analyze dependencies, install system and R dependencies in 1 line:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">deps-cli</span> all</span>
+<p>Now you can use it as explained in <code>deps-cli help</code>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Quickly install dependencies on the command line</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># same as</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="ex">deps-cli</span> create <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> sysreqs <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> install</span></code></pre></div>
-<p>In a Dockerfile you can then:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ...</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">MIT</span> (c) Analythium Solutions Inc. <span class="dv">2022</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>          _                           _ _ </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>       __<span class="sc">|</span> <span class="er">|</span> ___ _ __  ___        ___<span class="sc">|</span> (_)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>      <span class="sc">/</span> _<span class="st">`</span><span class="at"> |/ _ \ '_ \/ __|_____ / __| | |</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="at">     | (_| |  __/ |_) \__ \_____| (__| | |</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="at">      \__,_|\___| .__/|___/      \___|_|_|</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="at">                |_|                       </span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="at">Usage: deps-cli &lt;command&gt; [options]</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="at">Commands:</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="at">  deps-cli help         Print usage and exit</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="at">  deps-cli version      Print version and exit</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="at">  deps-cli create       Scan DIR and write dependencies.json</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="at">  deps-cli sysreqs      Install system requirements</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="at">  deps-cli install      Install R package dependencies</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="at">  deps-cli all          create+sysreqs+install in one</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="at">Options:</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="at">  --dir DIR             Directory to scan, defaults to .</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="at">  --upgrade             Upgrade package dependencies</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="at">Examples:</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="at">  deps-cli help</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="at">  deps-cli version</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="at">  deps-cli create</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="at">  deps-cli sysreqs</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="at">  deps-cli install --dir /root/app</span></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="at">  deps-cli all --dir /root/app --upgrade</span></span></code></pre></div>
+<p>Analyze dependencies, install system and R dependencies in 1 line:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">deps</span> all</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">R</span> <span class="at">-q</span> <span class="at">-e</span> <span class="st">"install.packages(c('rconfig', 'deps', 'remotes', 'pak', 'renv'), repos = c('https://cloud.r-project.org', 'https://analythium.r-universe.dev'))"</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">cp</span> <span class="at">-p</span> <span class="va">$(</span><span class="ex">R</span> RHOME<span class="va">)</span>/library/deps/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">chmod</span> +x /usr/local/bin/deps-cli</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> ... <span class="co"># your files</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">deps-cli</span> all</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># same as</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ex">deps-cli</span> create <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> sysreqs <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> install</span></code></pre></div>
+<p>In a Dockerfile you can then:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ...</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">R</span> <span class="at">-q</span> <span class="at">-e</span> <span class="st">"install.packages(c('rconfig', 'deps', 'remotes', 'pak', 'renv'), repos = c('https://cloud.r-project.org', 'https://analythium.r-universe.dev'))"</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">cp</span> <span class="at">-p</span> <span class="va">$(</span><span class="ex">R</span> RHOME<span class="va">)</span>/library/deps/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">chmod</span> +x /usr/local/bin/deps-cli</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> ... <span class="co"># your files</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">deps-cli</span> all</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
