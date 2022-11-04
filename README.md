@@ -242,6 +242,9 @@ Now you can use it as explained in `deps-cli help`, e.g. analyze
 dependencies, install system and R dependencies in 1 line:
 
 ``` bash
+deps-cli all
+
+# same as
 deps-cli create && deps-cli sysreqs && deps-cli install
 ```
 
@@ -256,7 +259,7 @@ RUN chmod +x /usr/local/bin/deps-cli
 
 COPY ... # your files
 
-RUN deps-cli create && deps-cli sysreqs && deps-cli install
+RUN deps-cli all
 ...
 ```
 
