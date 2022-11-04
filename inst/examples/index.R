@@ -1,6 +1,8 @@
 # deps examples
 
 i <- "01-basic"
+i <- "02-docker"
+i <- "04-local"
 
 message("Running example ", i)
 
@@ -24,10 +26,10 @@ dir.create(l)
 write(paste0(".libPaths(\"", l, "\")"), ".Rprofile", append = TRUE)
 
 message("  - Install deps")
-deps::create(sysreqs = TRUE)
+deps::create()
 deps::install(upgrade=TRUE)
 
-shiny::runApp()
+source("index.R")
 
 message("  - Clean up")
 setwd(o)
