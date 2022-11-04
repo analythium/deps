@@ -20,7 +20,7 @@ f <- function(z) {
 #' @remote analythium/rconfig@CRAN-v0.1.3
 ## You cna also use local::package_0.1.0.tar.gz
 ## or use the `@local package_0.1.0.tar.gz` for the same effect
-rconfig::config()
+rconfig::rconfig()
 
 ## Development packages following the @dev tag are excluded
 #' @dev devtools,roxygen2
