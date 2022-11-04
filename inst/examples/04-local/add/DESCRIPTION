@@ -1,0 +1,10 @@
+Package: add
+Type: Package
+Title: Add Numbers
+Version: 0.0.1
+Date: 2022-11-04
+Authors: Jane Doe [aut, cre]
+Description: Add numbers.
+License: GPL-2
+RoxygenNote: 7.2.1
+Encoding: UTF-8
