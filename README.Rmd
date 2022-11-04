@@ -196,9 +196,48 @@ cp inst/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli
 chmod +x /usr/local/bin/deps-cli
 ```
 
-Now you can use it as explained in `deps-cli help`, e.g. analyze dependencies, install system and R dependencies in 1 line:
+Now you can use it as explained in `deps-cli help`:
+
+```
+Quickly install dependencies on the command line
+
+    MIT (c) Analythium Solutions Inc. 2022
+          _                           _ _ 
+       __| | ___ _ __  ___        ___| (_)
+      / _` |/ _ \ '_ \/ __|_____ / __| | |
+     | (_| |  __/ |_) \__ \_____| (__| | |
+      \__,_|\___| .__/|___/      \___|_|_|
+                |_|                       
+
+Usage: deps-cli <command> [options]
+
+Commands:
+  deps-cli help         Print usage and exit
+  deps-cli version      Print version and exit
+  deps-cli create       Scan DIR and write dependencies.json
+  deps-cli sysreqs      Install system requirements
+  deps-cli install      Install R package dependencies
+  deps-cli all          create+sysreqs+install in one
+
+Options:
+  --dir DIR             Directory to scan, defaults to .
+  --upgrade             Upgrade package dependencies
+
+Examples:
+  deps-cli help
+  deps-cli version
+  deps-cli create
+  deps-cli sysreqs
+  deps-cli install --dir /root/app
+  deps-cli all --dir /root/app --upgrade
+```
+
+Analyze dependencies, install system and R dependencies in 1 line:
 
 ```bash
+deps all
+
+# same as
 deps-cli create && deps-cli sysreqs && deps-cli install
 ```
 
@@ -213,7 +252,7 @@ RUN chmod +x /usr/local/bin/deps-cli
 
 COPY ... # your files
 
-RUN deps-cli create && deps-cli sysreqs && deps-cli install
+RUN deps-cli all
 ...
 ```
 
