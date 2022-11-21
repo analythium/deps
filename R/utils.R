@@ -1,3 +1,11 @@
+## Silently read files
+read_lines <- function(...) {
+    # v <- try(suppressWarnings(readLines(...)))
+    # if (inherits(v, "try-error"))
+    #     "" else v
+    suppressWarnings(readLines(...))
+}
+
 #' Does the file contain Rscript shebang
 #'
 #' @param file Single file name.
@@ -7,7 +15,7 @@
 is_rscript <- function(
     file
 ) {
-    l1 <- suppressWarnings(readLines(file, 1L))
+    l1 <- read_lines(file, 1L)
     isTRUE(startsWith(l1, "#!")) && isTRUE(grepl("Rscript", l1))
 }
 
@@ -107,7 +115,7 @@ get_deps <- function(
     rfl <- deps_list_r(dir)
     if (length(rfl) < 1L)
         stop("No R related files found.")
-    x <- unlist(lapply(rfl, readLines))
+    x <- unlist(lapply(rfl, read_lines))
     x <- x[grep("^#'\\s*@", x)]
     tagged_deps <- list(
         local  = process_tag(x, "local"),

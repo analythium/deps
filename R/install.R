@@ -49,7 +49,7 @@ install <- function(
         if (cleanup)
             on.exit(unlink(dfile), add = TRUE)
     }
-    d <- jsonlite::fromJSON(readLines(file.path(dir, file)))
+    d <- jsonlite::fromJSON(read_lines(file.path(dir, file)))
     p <- d$packages[!is.na(d$packages$source),]
     r <- p$repos
     if (length(r) > 0L) {
