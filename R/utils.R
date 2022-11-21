@@ -32,6 +32,8 @@ deps_list_r <- function(
     ext = c("R", "Rmd", "Rnw"),
     shebang = TRUE
 ) {
+    if (!dir.exists(path))
+        stop(sprintf("Path %s invalid or does not exist.", path), call. = FALSE)
     fl <- list.files(path,
         full.names = TRUE,
         recursive = TRUE)
@@ -137,12 +139,12 @@ get_deps <- function(
     #to_install <- setdiff(all, union(dev, installed))
     tb$installed <- all %in% installed
     tb$dev <- all %in% unique(unlist(tagged_deps$dev))
-    tb$repo <- NA_character_
+    tb$repo <- rep(NA_character_, nrow(tb))
     for (i in tagged_deps[["repo"]]) {
         if (i[1L] %in% all)
             tb[i[1L], "repo"] <- i[2L]
     }
-    tb$ver <- NA_character_
+    tb$ver <- rep(NA_character_, nrow(tb))
     for (i in tagged_deps$ver) {
         if (i[1L] %in% all)
             tb[i[1L], "ver"] <- paste0(i[-1L], collapse = " ")
@@ -150,7 +152,7 @@ get_deps <- function(
 
     local <- paste0("local::", unlist(tagged_deps$local))
     rems <- sort(unique(unlist(c(local, tagged_deps$remote))))
-    tb$remote <- NA_character_
+    tb$remote <- rep(NA_character_, nrow(tb))
     for (i in all) {
         if (any(grepl(i, rems))) {
             j <- grep(i, rems)
@@ -169,14 +171,18 @@ get_deps <- function(
     attr(tb, "repos") <- if (is.null(tagged_deps[["repos"]]))
         character(0) else sort(unique(unlist(tagged_deps[["repos"]])))
 
-    tb$source <- NA_character_
+    tb$source <- rep(NA_character_, nrow(tb))
     tb$source[!tb$installed & !tb$dev & is.na(tb$ver) & is.na(tb$repo)] <- "cran"
     tb$source[!tb$installed & !tb$dev & is.na(tb$ver) & !is.na(tb$repo)] <- "repo"
     tb$source[!tb$installed & !tb$dev & !is.na(tb$ver)] <- "ver"
-    if (any(!is.na(tb$remote) & !is.na(tb$ver)))
-        stop("@ver and @remote cannot be both provided", call. = FALSE)
-    if (any(!is.na(tb$remote) & !is.na(tb$repo)))
-        stop("@ver and @repo cannot be both provided", call. = FALSE)
+    check_remote_ver <- !is.na(tb$remote) & !is.na(tb$ver)
+    if (any(check_remote_ver))
+        stop(sprintf("@ver and @remote cannot be both provided: %s", 
+            paste0(rownames(tb)[check_remote_ver], collapse = ", ")), call. = FALSE)
+    check_remote_repo <- !is.na(tb$remote) & !is.na(tb$repo)
+    if (any(check_remote_repo))
+        stop(sprintf("@repo and @remote cannot be both provided: %s", 
+            paste0(rownames(tb)[check_remote_repo], collapse = ", ")), call. = FALSE)
     tb$source[tb$source == "cran" & !is.na(tb$remote)] <- "remote"
     rownames(tb) <- NULL
 
@@ -241,10 +247,12 @@ write_deps <- function(
 sysreqs <- function(pkg, platform = "DEB") {
     if (missing(pkg) || is.null(platform) || is.na(platform))
         return(character(0))
-    j <- jsonlite::fromJSON(
+    j <- try(suppressWarnings(jsonlite::fromJSON(
         sprintf("https://sysreqs.r-hub.io/pkg/%s",
             paste0(as.character(pkg), collapse = ",")),
-        simplifyVector = FALSE)
+        simplifyVector = FALSE)), silent = TRUE)
+    if (inherits(j, "try-error"))
+        return(NULL)
     v <- unlist(j)
     s <- sort(unique(unname(v[grep(paste0("\\.", platform), names(v))])))
     if (!is.null(s)) {

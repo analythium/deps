@@ -37,5 +37,3 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
-
-_tmp

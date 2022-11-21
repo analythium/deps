@@ -2,6 +2,7 @@
 .DS_Store
 .*~
 ^docs$
+^_tmp$
 ^_pkgdown\.yml$
 ^pkgdown$
 ^README\.Rmd$
