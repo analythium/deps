@@ -24,10 +24,12 @@ jobs:
           Rscript -e 'devtools::install_dev_deps()'
 
       - name: Check package
-        run: Rscript -e 'devtools::check()'
+        run: |
+          Rscript -e 'devtools::document()'
+          Rscript -e 'devtools::check()'
 
       - name: Build site
-        run: Rscript -e 'pkgdown::build_site()'
+        run: Rscript -e 'pkgdown::build_site_github_pages(install=TRUE)'
 
       - name: Deploy site
         uses: JamesIves/github-pages-deploy-action@4.0.0
