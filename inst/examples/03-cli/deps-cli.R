@@ -16,9 +16,9 @@ CMD <- rconfig::command(CONFIG)
 DIR <- rconfig::value(CONFIG$dir, getwd())
 UPGRADE <- rconfig::value(CONFIG$upgrade, FALSE)
 
-OPTIONS <- '
+BANNER <- '
 
-Quickly install dependencies on the command line
+Quickly install R package dependencies on the command line
 
     MIT (c) Analythium Solutions Inc. 2022
           _                           _ _ 
@@ -27,6 +27,12 @@ Quickly install dependencies on the command line
      | (_| |  __/ |_) \\__ \\_____| (__| | |
       \\__,_|\\___| .__/|___/      \\___|_|_|
                 |_|                       
+
+See <https://github.com/analythium/deps>
+
+'
+
+OPTIONS <- '
 
 Usage: deps-cli <command> [options]
 
@@ -104,7 +110,7 @@ install <- function(DIR, UPGRADE, ...) {
 
 all <- function(DIR, UPGRADE, ...) {
     if (!file.exists(file.path(DIR, "dependencies.json")))
-        on.exit(unlink(file.exists(file.path(DIR, "dependencies.json"))))
+        on.exit(unlink(file.path(DIR, "dependencies.json")))
     create(DIR)
     sysreqs(DIR)
     install(DIR, UPGRADE, ...)
@@ -123,6 +129,9 @@ if (length(CMD) != 1L || !(CMD %in% names(FUN)))
     stop("\nCommand not found, see deps-cli help for available commands.\n",
         call. = FALSE)
 
+cat(BANNER)
+if (CMD != "version")
+    version()
 FUN[[CMD]](DIR, UPGRADE)
 
 quit("no", 0, FALSE)
