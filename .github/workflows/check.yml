@@ -10,29 +10,28 @@ jobs:
     runs-on: macOS-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: R setup
-        uses: r-lib/actions/setup-r@v1
-
-      - name: Install sysreqs
-        run: brew install pandoc harfbuzz fribidi
-
+        uses: r-lib/actions/setup-r@v2
+        
+      - name: Install pandoc
+        run: |
+          brew install pandoc
+          brew install --cask xquartz        
       - name: Install dependencies
         run: |
-          Rscript -e 'install.packages(c("pkgdown", "devtools", "textshaping"))'
+          Rscript -e 'install.packages(c("pkgdown", "devtools"))'
           Rscript -e 'devtools::install_dev_deps()'
-
       - name: Check package
-        run: |
-          Rscript -e 'devtools::document()'
-          Rscript -e 'devtools::check()'
+        run: Rscript -e 'devtools::check()'
 
       - name: Build site
         run: Rscript -e 'pkgdown::build_site_github_pages(install=TRUE)'
 
       - name: Deploy site
-        uses: JamesIves/github-pages-deploy-action@4.0.0
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: docs
+          clean: true
