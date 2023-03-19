@@ -78,7 +78,8 @@ project folder or using and existing `dependencies.json` file.
 Required packages are found using the
 [`renv::dependencies()`](https://rstudio.github.io/renv/reference/dependencies.html)
 function. System dependencies are based on
-[sysreqs.r-hub.io](https://sysreqs.r-hub.io).
+[sysreqs.r-hub.io](https://sysreqs.r-hub.io) with a focus on DEB
+(Debian/Ubuntu) packages (but can be set to RPM).
 
 The packages list found by `renv::dependencies()` is refined and
 modified by roxygen-style comments. But the packages need to be
@@ -221,12 +222,14 @@ dependencies. It will amend the dependency list and package sources
 based on the comments and query system requirements for the packages
 where those requirements are known for a particular platform. The
 summary is written into the `dependencies.json` file. Optionally, the
-system requirements are written into the `dependencies.json` file.
+system requirements are written into the `dependencies.json` file as
+well.
 
 `install()` will look for the `dependencies.json` file in the root of
 the project directory and perform dependency installation if the file
 exists. If the file does not exist, it uses `create()` to create that
-file before attempting installation.
+file before attempting installation but removes the `dependencies.json`
+file afterwards, leaving no trace.
 
 ## deps-cli
 
@@ -238,17 +241,21 @@ cp inst/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli
 chmod +x /usr/local/bin/deps-cli
 ```
 
-Now you can use it as explained in `deps-cli help`:
+Usage of the CLI as explained in `deps-cli help`:
 
-    Quickly install dependencies on the command line
+    🚀 Quickly install R package dependencies on the command line
 
-        MIT (c) Analythium Solutions Inc. 2022
+    👉 MIT (c) Analythium Solutions Inc. 2022-2023
               _                           _ _ 
            __| | ___ _ __  ___        ___| (_)
           / _` |/ _ \ '_ \/ __|_____ / __| | |
          | (_| |  __/ |_) \__ \_____| (__| | |
           \__,_|\___| .__/|___/      \___|_|_|
                     |_|                       
+
+    🔗 See https://github.com/analythium/deps
+
+    deps-cli is based on deps 0.0.2 2022-10-24 
 
     Usage: deps-cli <command> [options]
 
@@ -258,16 +265,18 @@ Now you can use it as explained in `deps-cli help`:
       deps-cli create       Scan DIR and write dependencies.json
       deps-cli sysreqs      Install system requirements
       deps-cli install      Install R package dependencies
-      deps-cli all          create+sysreqs+install in one
+      deps-cli all          create & sysreqs & install in one go
 
     Options:
       --dir DIR             Directory to scan, defaults to .
       --upgrade             Upgrade package dependencies
+      --silent              Silent, no info printed
 
     Examples:
       deps-cli help
       deps-cli version
       deps-cli create
+      deps-cli create --silent
       deps-cli sysreqs
       deps-cli install --dir /root/app
       deps-cli all --dir /root/app --upgrade
@@ -281,7 +290,10 @@ deps all
 deps-cli create && deps-cli sysreqs && deps-cli install
 ```
 
-In a Dockerfile you can then:
+`deps-cli install` looks for the following files before attempting to
+detect dependencies: `renv.lock`, `pkg.lock`, and `DESCRIPTION`.
+
+In a Dockerfile you can:
 
 ``` dockerfile
 FROM ...
@@ -302,5 +314,5 @@ See the [`inst/examples`](./inst/examples/) folder for more examples.
 
 ## License
 
-[MIT License](./LICENSE) © 2022 Peter Solymos and Analythium Solutions
-Inc.
+[MIT License](./LICENSE) © 2022-2023 Peter Solymos and Analythium
+Solutions Inc.
