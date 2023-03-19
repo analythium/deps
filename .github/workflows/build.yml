@@ -3,7 +3,7 @@ on:
     branches:
       - main
 
-name: check
+name: build
 
 jobs:
   build-and-push-image:
