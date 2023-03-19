@@ -308,6 +308,13 @@ RUN deps-cli all
 ...
 ```
 
+Or simply use the `ghcr.io/analythium/deps:latest` as your parent image:
+
+``` dockerfile
+FROM ghcr.io/analythium/deps:latest
+...
+```
+
 ## Examples
 
 See the [`inst/examples`](./inst/examples/) folder for more examples.
