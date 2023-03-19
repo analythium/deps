@@ -140,6 +140,9 @@ if (length(CMD) != 1L || !(CMD %in% names(FUN)))
 
 if (!SILENT) {
     cat(HEADER)
+    if (CMD == "help") {
+        version()
+    }
 }
 FUN[[CMD]](DIR, UPGRADE)
 if (!SILENT && CMD %in% c("sysreqs", "install", "all")) {
