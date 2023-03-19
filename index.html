@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="index.html">deps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,7 +106,7 @@
 <div class="section level2">
 <h2 id="what-deps-does">What deps does<a class="anchor" aria-label="anchor" href="#what-deps-does"></a>
 </h2>
-<p>Required packages are found using the <a href="https://rstudio.github.io/renv/reference/dependencies.html" class="external-link"><code>renv::dependencies()</code></a> function. System dependencies are based on <a href="https://sysreqs.r-hub.io" class="external-link">sysreqs.r-hub.io</a>.</p>
+<p>Required packages are found using the <a href="https://rstudio.github.io/renv/reference/dependencies.html" class="external-link"><code>renv::dependencies()</code></a> function. System dependencies are based on <a href="https://sysreqs.r-hub.io" class="external-link">sysreqs.r-hub.io</a> with a focus on DEB (Debian/Ubuntu) packages (but can be set to RPM).</p>
 <p>The packages list found by <code><a href="https://rstudio.github.io/renv/reference/dependencies.html" class="external-link">renv::dependencies()</a></code> is refined and modified by roxygen-style comments. But the packages need to be declared/used somewhere in the source code for the comments to take effect.</p>
 <p>If no comment is provided for a given package, its source is assumed to be a CRAN repository, and its version to be the latest given the repositories used at the time of installation.</p>
 </div>
@@ -235,8 +235,8 @@
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>The <code><a href="reference/create.html">create()</a></code> function will crawl the project directory for package dependencies. It will amend the dependency list and package sources based on the comments and query system requirements for the packages where those requirements are known for a particular platform. The summary is written into the <code>dependencies.json</code> file. Optionally, the system requirements are written into the <code>dependencies.json</code> file.</p>
-<p><code><a href="reference/install.html">install()</a></code> will look for the <code>dependencies.json</code> file in the root of the project directory and perform dependency installation if the file exists. If the file does not exist, it uses <code><a href="reference/create.html">create()</a></code> to create that file before attempting installation.</p>
+<p>The <code><a href="reference/create.html">create()</a></code> function will crawl the project directory for package dependencies. It will amend the dependency list and package sources based on the comments and query system requirements for the packages where those requirements are known for a particular platform. The summary is written into the <code>dependencies.json</code> file. Optionally, the system requirements are written into the <code>dependencies.json</code> file as well.</p>
+<p><code><a href="reference/install.html">install()</a></code> will look for the <code>dependencies.json</code> file in the root of the project directory and perform dependency installation if the file exists. If the file does not exist, it uses <code><a href="reference/create.html">create()</a></code> to create that file before attempting installation but removes the <code>dependencies.json</code> file afterwards, leaving no trace.</p>
 </div>
 <div class="section level2">
 <h2 id="deps-cli">deps-cli<a class="anchor" aria-label="anchor" href="#deps-cli"></a>
@@ -244,10 +244,10 @@
 <p>A CLI example is given in <a href="./inst/examples/02-cli/"><code>inst/examples/02-cli</code></a>:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">cp</span> inst/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli</span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">chmod</span> +x /usr/local/bin/deps-cli</span></code></pre></div>
-<p>Now you can use it as explained in <code>deps-cli help</code>:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>Quickly install dependencies on the command line</span>
+<p>Usage of the CLI as explained in <code>deps-cli help</code>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>🚀 Quickly install R package dependencies on the command line</span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>    <span class="fu">MIT</span> (c) Analythium Solutions Inc. <span class="dv">2022</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>👉 <span class="fu">MIT</span> (c) Analythium Solutions Inc. <span class="dv">2022-2023</span></span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>          _                           _ _ </span>
 <span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>       __<span class="sc">|</span> <span class="er">|</span> ___ _ __  ___        ___<span class="sc">|</span> (_)</span>
 <span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>      <span class="sc">/</span> _<span class="st">`</span><span class="at"> |/ _ \ '_ \/ __|_____ / __| | |</span></span>
@@ -255,33 +255,40 @@
 <span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="at">      \__,_|\___| .__/|___/      \___|_|_|</span></span>
 <span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="at">                |_|                       </span></span>
 <span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a></span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="at">Usage: deps-cli &lt;command&gt; [options]</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="at">🔗 See https://github.com/analythium/deps</span></span>
 <span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a></span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="at">Commands:</span></span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="at">  deps-cli help         Print usage and exit</span></span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="at">  deps-cli version      Print version and exit</span></span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="at">  deps-cli create       Scan DIR and write dependencies.json</span></span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="at">  deps-cli sysreqs      Install system requirements</span></span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="at">  deps-cli install      Install R package dependencies</span></span>
-<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="at">  deps-cli all          create+sysreqs+install in one</span></span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a></span>
-<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="at">Options:</span></span>
-<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="at">  --dir DIR             Directory to scan, defaults to .</span></span>
-<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="at">  --upgrade             Upgrade package dependencies</span></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="at">deps-cli is based on deps 0.0.2 2022-10-24 </span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="at">Usage: deps-cli &lt;command&gt; [options]</span></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="at">Commands:</span></span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="at">  deps-cli help         Print usage and exit</span></span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="at">  deps-cli version      Print version and exit</span></span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="at">  deps-cli create       Scan DIR and write dependencies.json</span></span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="at">  deps-cli sysreqs      Install system requirements</span></span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="at">  deps-cli install      Install R package dependencies</span></span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="at">  deps-cli all          create &amp; sysreqs &amp; install in one go</span></span>
 <span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a></span>
-<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a><span class="at">Examples:</span></span>
-<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="at">  deps-cli help</span></span>
-<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a><span class="at">  deps-cli version</span></span>
-<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="at">  deps-cli create</span></span>
-<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a><span class="at">  deps-cli sysreqs</span></span>
-<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a><span class="at">  deps-cli install --dir /root/app</span></span>
-<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a><span class="at">  deps-cli all --dir /root/app --upgrade</span></span></code></pre></div>
+<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a><span class="at">Options:</span></span>
+<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="at">  --dir DIR             Directory to scan, defaults to .</span></span>
+<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a><span class="at">  --upgrade             Upgrade package dependencies</span></span>
+<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="at">  --silent              Silent, no info printed</span></span>
+<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a></span>
+<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a><span class="at">Examples:</span></span>
+<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a><span class="at">  deps-cli help</span></span>
+<span id="cb14-32"><a href="#cb14-32" tabindex="-1"></a><span class="at">  deps-cli version</span></span>
+<span id="cb14-33"><a href="#cb14-33" tabindex="-1"></a><span class="at">  deps-cli create</span></span>
+<span id="cb14-34"><a href="#cb14-34" tabindex="-1"></a><span class="at">  deps-cli create --silent</span></span>
+<span id="cb14-35"><a href="#cb14-35" tabindex="-1"></a><span class="at">  deps-cli sysreqs</span></span>
+<span id="cb14-36"><a href="#cb14-36" tabindex="-1"></a><span class="at">  deps-cli install --dir /root/app</span></span>
+<span id="cb14-37"><a href="#cb14-37" tabindex="-1"></a><span class="at">  deps-cli all --dir /root/app --upgrade</span></span></code></pre></div>
 <p>Analyze dependencies, install system and R dependencies in 1 line:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="ex">deps</span> all</span>
 <span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co"># same as</span></span>
 <span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="ex">deps-cli</span> create <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> sysreqs <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> install</span></code></pre></div>
-<p>In a Dockerfile you can then:</p>
+<p><code>deps-cli install</code> looks for the following files before attempting to detect dependencies: <code>renv.lock</code>, <code>pkg.lock</code>, and <code>DESCRIPTION</code>.</p>
+<p>In a Dockerfile you can:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="kw">FROM</span> ...</span>
 <span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">R</span> <span class="at">-q</span> <span class="at">-e</span> <span class="st">"install.packages(c('rconfig', 'deps', 'remotes', 'pak', 'renv'), repos = c('https://cloud.r-project.org', 'https://analythium.r-universe.dev'))"</span></span>
@@ -301,7 +308,7 @@
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h2>
-<p><a href="./LICENSE">MIT License</a> © 2022 Peter Solymos and Analythium Solutions Inc.</p>
+<p><a href="./LICENSE">MIT License</a> © 2022-2023 Peter Solymos and Analythium Solutions Inc.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
