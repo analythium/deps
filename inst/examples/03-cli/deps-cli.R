@@ -6,21 +6,25 @@
 # Now you can use it as explained in deps-cli help, e.g.:
 #     deps-cli create && deps-cli sysreqs && deps-cli install
 
-if (!requireNamespace("deps")) {
-    install.packages(c("rconfig", "deps", "remotes", "pak", "renv"),
-        repos = c("https://cloud.r-project.org", "https://analythium.r-universe.dev"))
-}
+NOW <- Sys.time()
+
+suppressMessages({
+    if (!requireNamespace("deps")) {
+        install.packages(c("rconfig", "deps", "remotes", "pak", "renv"),
+            repos = c("https://cloud.r-project.org", "https://analythium.r-universe.dev"))
+    }
+})
 
 CONFIG <- rconfig::rconfig()
 CMD <- rconfig::command(CONFIG)
 DIR <- rconfig::value(CONFIG$dir, getwd())
 UPGRADE <- rconfig::value(CONFIG$upgrade, FALSE)
+SILENT <- rconfig::value(CONFIG$silent, FALSE)
 
-BANNER <- '
+HEADER <- '
+🚀 Quickly install R package dependencies on the command line
 
-Quickly install R package dependencies on the command line
-
-    MIT (c) Analythium Solutions Inc. 2022
+👉 MIT (c) Analythium Solutions Inc. 2022-2023
           _                           _ _ 
        __| | ___ _ __  ___        ___| (_)
       / _` |/ _ \\ \'_ \\/ __|_____ / __| | |
@@ -28,12 +32,15 @@ Quickly install R package dependencies on the command line
       \\__,_|\\___| .__/|___/      \\___|_|_|
                 |_|                       
 
-See <https://github.com/analythium/deps>
+🔗 See https://github.com/analythium/deps
+'
+
+FOOTER <- '
+🚀 Dependencies successfully installed in %s
 
 '
 
 OPTIONS <- '
-
 Usage: deps-cli <command> [options]
 
 Commands:
@@ -42,16 +49,18 @@ Commands:
   deps-cli create       Scan DIR and write dependencies.json
   deps-cli sysreqs      Install system requirements
   deps-cli install      Install R package dependencies
-  deps-cli all          create+sysreqs+install in one
+  deps-cli all          create & sysreqs & install in one go
 
 Options:
   --dir DIR             Directory to scan, defaults to .
   --upgrade             Upgrade package dependencies
+  --silent              Silent, no info printed
 
 Examples:
   deps-cli help
   deps-cli version
   deps-cli create
+  deps-cli create --silent
   deps-cli sysreqs
   deps-cli install --dir /root/app
   deps-cli all --dir /root/app --upgrade
@@ -129,9 +138,15 @@ if (length(CMD) != 1L || !(CMD %in% names(FUN)))
     stop("\nCommand not found, see deps-cli help for available commands.\n",
         call. = FALSE)
 
-cat(BANNER)
-if (CMD != "version")
-    version()
+if (!SILENT) {
+    cat(HEADER)
+}
 FUN[[CMD]](DIR, UPGRADE)
-
+if (!SILENT && CMD %in% c("sysreqs", "install", "all")) {
+    if (CMD != "version") {
+        version()
+    }
+    ELAPSED <- Sys.time() - NOW
+    cat(sprintf(FOOTER, format(ELAPSED, digits = 2L)))
+}
 quit("no", 0, FALSE)
