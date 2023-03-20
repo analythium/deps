@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="index.html">deps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -173,7 +173,7 @@
 <p>Known system requirements can be declared using the <code>@sys</code> tag, packages can be separated by commas:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @sys curl,git</span></span></code></pre></div>
-<p>These packages are added to the list of requirements identified by the <a href="https://sysreqs.r-hub.io" class="external-link">sysreqs.r-hub.io</a> database for the non-development packages.</p>
+<p>These packages are added to the list of requirements identified by the <a href="https://sysreqs.r-hub.io" class="external-link">sysreqs.r-hub.io</a> database for the non-development packages. The platform (e.g. the default <code>"DEB"</code> or <code>"RPM</code>) can be set via the <code>R_DEPS_PLATFORM</code> environment variable.</p>
 </div>
 <div class="section level4">
 <h4 id="remote-sources">Remote sources<a class="anchor" aria-label="anchor" href="#remote-sources"></a>
@@ -289,8 +289,8 @@
 <span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="ex">deps-cli</span> create <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> sysreqs <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> install</span></code></pre></div>
 <p><code>deps-cli install</code> looks for the following files before attempting to detect dependencies: <code>renv.lock</code>, <code>pkg.lock</code>, and <code>DESCRIPTION</code>.</p>
 <p>In a Dockerfile you can:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="kw">FROM</span> ...</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a></span>
+<div class="sourceCode" id="cb16"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="kw">FROM</span> eddelbuettel/r2u:22.04</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="kw">ENV</span> R_DEPS_PLATFORM=<span class="st">"DEB"</span></span>
 <span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">R</span> <span class="at">-q</span> <span class="at">-e</span> <span class="st">"install.packages(c('rconfig', 'deps', 'remotes', 'pak', 'renv'), repos = c('https://cloud.r-project.org', 'https://analythium.r-universe.dev'))"</span></span>
 <span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">cp</span> <span class="at">-p</span> <span class="va">$(</span><span class="ex">R</span> RHOME<span class="va">)</span>/library/deps/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli</span>
 <span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">chmod</span> +x /usr/local/bin/deps-cli</span>
@@ -299,7 +299,8 @@
 <span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a></span>
 <span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">deps-cli</span> all</span>
 <span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>...</span></code></pre></div>
-<p>Or simply use the <code>ghcr.io/analythium/deps:latest</code> as your parent image:</p>
+<p>Use the <code>R_DEPS_PLATFORM</code> environment variable to define system dependencies (e.g. <code>"RPM"</code>) if not using an image where those are automatically resolved (like the <code>eddelbuettel/r2u</code>).</p>
+<p>You can simply use the <code>ghcr.io/analythium/deps:latest</code> as your parent image where the <code>deps-cli</code> is already installed:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="kw">FROM</span> ghcr.io/analythium/deps:latest</span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>...</span></code></pre></div>
 </div>

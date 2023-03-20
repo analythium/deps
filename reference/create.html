@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">deps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,7 @@
 <span>  dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  file <span class="op">=</span> <span class="st">"dependencies.json"</span>,</span>
 <span>  output <span class="op">=</span> <span class="va">dir</span>,</span>
-<span>  platform <span class="op">=</span> <span class="st">"DEB"</span>,</span>
+<span>  platform <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  installed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"base"</span>, <span class="st">"recommended"</span><span class="op">)</span>,</span>
 <span>  overwrite <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -82,7 +82,10 @@
 
 
 <dt>platform</dt>
-<dd><p>The platform supplied to <code>sysreqs()</code>. Can be <code>NULL</code> or <code>NA</code> in which case no system requirements are returned.</p></dd>
+<dd><p>The platform supplied to <code>sysreqs()</code>.
+It can be <code>NULL</code> when the value of the R_DEPS_PLATFORM environment variable is used when set,
+defaults to <code>"DEB"</code> when R_DEPS_PLATFORM is unset.
+It can be <code>NA</code> in which case no system requirements are returned.</p></dd>
 
 
 <dt>installed</dt>
