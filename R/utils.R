@@ -102,7 +102,10 @@ process_tag <- function(
 #' Get dependencies
 #'
 #' @param dir Directory to explore.
-#' @param platform Platform for `sysreqs()`.
+#' @param platform The platform supplied to `sysreqs()`.
+#'   It can be `NULL` when the value of the R_DEPS_PLATFORM environment variable is used when set,
+#'   defaults to `"DEB"` when R_DEPS_PLATFORM is unset.
+#'   It can be `NA` in which case no system requirements are returned.
 #' @param installed The `priority` argument for `installed.packages()`.
 #' @param dev Logical, include 'development' dependencies as well for `renv::dependencies()`.
 #'
@@ -110,7 +113,7 @@ process_tag <- function(
 #' @noRd
 get_deps <- function(
     dir = getwd(),
-    platform = "DEB",
+    platform = NULL,
     installed = c("base", "recommended"),
     dev = TRUE
 ) {
@@ -236,7 +239,11 @@ write_deps <- function(
 #' Get System Requirements
 #'
 #' @param pkg Character, packages for which system requirements are needed.
-#' @param platform Character, the platform to be filtered for (e.g. `"DEB"`, `"RPM`, etc. see <https://sysreqs.r-hub.io/>). Can be `NULL` or `NA` in which case no system requirements are returned.
+#' @param platform Character, the platform to be filtered for 
+#'   (e.g. `"DEB"`, `"RPM`, etc. see <https://sysreqs.r-hub.io/>). 
+#'   It can be `NULL` when the value of the R_DEPS_PLATFORM environment variable is used when set,
+#'   defaults to `"DEB"` when R_DEPS_PLATFORM is unset.
+#'   It can be `NA` in which case no system requirements are returned.
 #'
 #' @examples
 #' sysreqs("igraph")
@@ -244,8 +251,13 @@ write_deps <- function(
 #'
 #' @return A character vector.
 #' @noRd
-sysreqs <- function(pkg, platform = "DEB") {
-    if (missing(pkg) || is.null(platform) || is.na(platform))
+sysreqs <- function(pkg, platform = NULL) {
+    if (is.null(platform)) {
+        PLATFORM <- Sys.getenv("R_DEPS_PLATFORM")
+        platform <- if (PLATFORM == "")
+            "DEB" else PLATFORM
+    }
+    if (missing(pkg) || is.na(platform))
         return(character(0))
     j <- try(suppressWarnings(jsonlite::fromJSON(
         sprintf("https://sysreqs.r-hub.io/pkg/%s",

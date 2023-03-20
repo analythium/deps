@@ -126,7 +126,8 @@ can be separated by commas:
 
 These packages are added to the list of requirements identified by the
 [sysreqs.r-hub.io](https://sysreqs.r-hub.io) database for the
-non-development packages.
+non-development packages. The platform (e.g. the default `"DEB"` or
+`"RPM`) can be set via the `R_DEPS_PLATFORM` environment variable.
 
 #### Remote sources
 
@@ -296,8 +297,8 @@ detect dependencies: `renv.lock`, `pkg.lock`, and `DESCRIPTION`.
 In a Dockerfile you can:
 
 ``` dockerfile
-FROM ...
-
+FROM eddelbuettel/r2u:22.04
+ENV R_DEPS_PLATFORM="DEB"
 RUN R -q -e "install.packages(c('rconfig', 'deps', 'remotes', 'pak', 'renv'), repos = c('https://cloud.r-project.org', 'https://analythium.r-universe.dev'))"
 RUN cp -p $(R RHOME)/library/deps/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli
 RUN chmod +x /usr/local/bin/deps-cli
@@ -308,7 +309,12 @@ RUN deps-cli all
 ...
 ```
 
-Or simply use the `ghcr.io/analythium/deps:latest` as your parent image:
+Use the `R_DEPS_PLATFORM` environment variable to define system
+dependencies (e.g. `"RPM"`) if not using an image where those are
+automatically resolved (like the `eddelbuettel/r2u`).
+
+You can simply use the `ghcr.io/analythium/deps:latest` as your parent
+image where the `deps-cli` is already installed:
 
 ``` dockerfile
 FROM ghcr.io/analythium/deps:latest

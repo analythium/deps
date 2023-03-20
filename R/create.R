@@ -3,7 +3,10 @@
 #' @param dir Path to the directory where the files to be scanned are located.
 #' @param file The name of the file to be save, default is `"dependencies.json"`.
 #' @param output Path to the directory where JSON file should be written to.
-#' @param platform The platform supplied to `sysreqs()`. Can be `NULL` or `NA` in which case no system requirements are returned.
+#' @param platform The platform supplied to `sysreqs()`.
+#'   It can be `NULL` when the value of the R_DEPS_PLATFORM environment variable is used when set,
+#'   defaults to `"DEB"` when R_DEPS_PLATFORM is unset.
+#'   It can be `NA` in which case no system requirements are returned.
 #' @param installed The `priority` argument for `installed.packages()` for packages to be excluded.
 #' @param overwrite Logical, should the `file` in the `output` directory be overwritten if exists?
 #'
@@ -21,7 +24,7 @@ create <- function(
     dir = getwd(),
     file = "dependencies.json",
     output = dir,
-    platform = "DEB",
+    platform = NULL,
     installed = c("base", "recommended"),
     overwrite = TRUE
 ) {

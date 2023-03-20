@@ -16,6 +16,7 @@ renv
 repo
 repos
 reproducibility
+rmarkdown
 roxygen
 switchr
 sysreqs
