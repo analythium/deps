@@ -1,6 +1,6 @@
 Package: deps
 Type: Package
-Title: Dependency Management with roxygen-style Comments
+Title: Dependency Management with 'roxygen'-style Comments
 Version: 0.1.1
 Date: 2023-03-19
 Authors@R: c(
