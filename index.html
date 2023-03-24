@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="index.html">deps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,9 +72,9 @@
 <div class="page-header"><h1 id="deps">deps<a class="anchor" aria-label="anchor" href="#deps"></a>
 </h1></div>
 <blockquote>
-<p>Dependency Management with roxygen-style Comments</p>
+<p>Dependency Management with ‘roxygen’-Style Comments</p>
 </blockquote>
-<p>Manage your source code dependencies by decorating your existing R code with special, roxygen-style comments.</p>
+<p>Manage your source code dependencies by decorating your existing R code with special, ‘roxygen’-style comments.</p>
 <p><a href="https://github.com/analythium/deps/actions" class="external-link"><img src="https://github.com/analythium/deps/actions/workflows/check.yml/badge.svg" alt="Build status"></a></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @repo deps https://analythium.r-universe.dev</span></span>
@@ -107,13 +107,13 @@
 <h2 id="what-deps-does">What deps does<a class="anchor" aria-label="anchor" href="#what-deps-does"></a>
 </h2>
 <p>Required packages are found using the <a href="https://rstudio.github.io/renv/reference/dependencies.html" class="external-link"><code>renv::dependencies()</code></a> function. System dependencies are based on <a href="https://sysreqs.r-hub.io" class="external-link">sysreqs.r-hub.io</a> with a focus on DEB (Debian/Ubuntu) packages (but can be set to RPM).</p>
-<p>The packages list found by <code><a href="https://rstudio.github.io/renv/reference/dependencies.html" class="external-link">renv::dependencies()</a></code> is refined and modified by roxygen-style comments. But the packages need to be declared/used somewhere in the source code for the comments to take effect.</p>
+<p>The packages list found by <code><a href="https://rstudio.github.io/renv/reference/dependencies.html" class="external-link">renv::dependencies()</a></code> is refined and modified by ‘roxygen’-style comments. But the packages need to be declared/used somewhere in the source code for the comments to take effect.</p>
 <p>If no comment is provided for a given package, its source is assumed to be a CRAN repository, and its version to be the latest given the repositories used at the time of installation.</p>
 </div>
 <div class="section level2">
 <h2 id="tags">Tags<a class="anchor" aria-label="anchor" href="#tags"></a>
 </h2>
-<p>Tags are part of the <a href="https://cran.r-project.org/package=roxygen2" class="external-link">roxygen-style comments</a>:</p>
+<p>Tags are part of the <a href="https://cran.r-project.org/package=roxygen2" class="external-link">‘roxygen’-style comments</a>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @&lt;tag&gt; &lt;parameter&gt;</span></span></code></pre></div>
 <p>where <code>#'</code> is followed by space, the tag starting with <code>@</code>, space, and some parameters.</p>
@@ -308,6 +308,13 @@
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
 <p>See the <a href="./inst/examples/"><code>inst/examples</code></a> folder for more examples.</p>
+</div>
+<div class="section level2">
+<h2 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>
+</h2>
+<p>The deps package uses a 5 minutes timeout for downloads instead of the default 1 minute (<code>getOption("timeout")</code>). When the timeout option or the <code>R_DEFAULT_INTERNET_TIMEOUT</code> environment variable is set to a &gt;5 minutes value, it will be respected and timeout will be set to the maximum of the three possible values.</p>
+<p>The platform for system requirements (e.g. the default <code>"DEB"</code> or <code>"RPM</code>) can be set via the <code>R_DEPS_PLATFORM</code> environment variable. The default value is <code>"DEB"</code>.</p>
+<p>The <code><a href="reference/create.html">create()</a></code> function prompts the user asking confirmation before writing the <code>dependencies.json</code> file. Use <code>create(ask = FALSE)</code> to bypass the prompt.</p>
 </div>
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
