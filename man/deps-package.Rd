@@ -4,7 +4,7 @@
 \name{deps-package}
 \alias{deps}
 \alias{deps-package}
-\title{deps: Dependency Management with roxygen-style Comments}
+\title{deps: Dependency Management with 'roxygen'-Style Comments}
 \description{
 Manage your source code dependencies by decorating your existing R code with special, 'roxygen'-style comments.
 }

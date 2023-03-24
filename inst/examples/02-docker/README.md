@@ -29,7 +29,7 @@ RUN addgroup --system app && adduser --system --ingroup app app
 WORKDIR /home/app
 COPY app .
 
-RUN R -q -e "deps::create()"
+RUN R -q -e "deps::create(ask=FALSE)"
 RUN apt-get install -y --no-install-recommends \
     $( jq -r '.sysreqs | join(" ")' dependencies.json )
 RUN R -q -e "deps::install()"

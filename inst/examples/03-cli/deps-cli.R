@@ -81,13 +81,13 @@ version <- function(...) {
 }
 
 create <- function(DIR, ...) {
-    deps::create(DIR, overwrite = FALSE)
+    deps::create(DIR, overwrite = FALSE, ask = FALSE)
     invisible(NULL)
 }
 
 sysreqs <- function(DIR, ...) {
     if (!file.exists(file.path(DIR, "dependencies.json"))) {
-        deps::create(DIR, output = tempdir())
+        deps::create(DIR, output = tempdir(), ask = FALSE)
         depsfile <- file.path(tempdir(), "dependencies.json")
     } else {
         depsfile <- file.path(DIR, "dependencies.json")
@@ -120,7 +120,7 @@ install <- function(DIR, UPGRADE, ...) {
 all <- function(DIR, UPGRADE, ...) {
     if (!file.exists(file.path(DIR, "dependencies.json")))
         on.exit(unlink(file.path(DIR, "dependencies.json")))
-    create(DIR)
+    create(DIR, ask = FALSE)
     sysreqs(DIR)
     install(DIR, UPGRADE, ...)
     invisible(NULL)

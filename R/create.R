@@ -1,5 +1,7 @@
 #' Create a Dependencies JSON File
 #'
+#' Discover dependencies and write a `dependencies.json` file.
+#'
 #' @param dir Path to the directory where the files to be scanned are located.
 #' @param file The name of the file to be save, default is `"dependencies.json"`.
 #' @param output Path to the directory where JSON file should be written to.
@@ -9,11 +11,12 @@
 #'   It can be `NA` in which case no system requirements are returned.
 #' @param installed The `priority` argument for `installed.packages()` for packages to be excluded.
 #' @param overwrite Logical, should the `file` in the `output` directory be overwritten if exists?
+#' @param ask Logical, asking confirmation before writing the `dependencies.json` file.
 #'
 #' @examples
 #' dir <- system.file("examples/01-basic", package = "deps")
 #' out <- tempdir()
-#' create(dir, output = out)
+#' create(dir, output = out, ask = interactive())
 #' cat(readLines(file.path(out, "dependencies.json")), sep = "\n")
 #' unlink(file.path(out, "dependencies.json"))
 #'
@@ -26,8 +29,15 @@ create <- function(
     output = dir,
     platform = NULL,
     installed = c("base", "recommended"),
-    overwrite = TRUE
+    overwrite = TRUE,
+    ask = TRUE
 ) {
+    if (ask) {
+        cat("Do you want the dependencies.json file to be saved?")
+        if (utils::menu(c("Yes", "No")) != 1L){
+            return(invisible())
+        }
+    }
     d <- get_deps(
         dir = dir,
         platform = platform,

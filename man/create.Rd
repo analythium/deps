@@ -10,7 +10,8 @@ create(
   output = dir,
   platform = NULL,
   installed = c("base", "recommended"),
-  overwrite = TRUE
+  overwrite = TRUE,
+  ask = TRUE
 )
 }
 \arguments{
@@ -28,17 +29,19 @@ It can be \code{NA} in which case no system requirements are returned.}
 \item{installed}{The \code{priority} argument for \code{installed.packages()} for packages to be excluded.}
 
 \item{overwrite}{Logical, should the \code{file} in the \code{output} directory be overwritten if exists?}
+
+\item{ask}{Logical, asking confirmation before writing the \code{dependencies.json} file.}
 }
 \value{
 Invisibly returns the list of file names that were created. The side effect is a JSON (and possibly a text for system requirements) file written to the hard drive. The function fails when there are no R related files in \code{dir}.
 }
 \description{
-Create a Dependencies JSON File
+Discover dependencies and write a \code{dependencies.json} file.
 }
 \examples{
 dir <- system.file("examples/01-basic", package = "deps")
 out <- tempdir()
-create(dir, output = out)
+create(dir, output = out, ask = interactive())
 cat(readLines(file.path(out, "dependencies.json")), sep = "\n")
 unlink(file.path(out, "dependencies.json"))
 

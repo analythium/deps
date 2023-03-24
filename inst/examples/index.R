@@ -26,8 +26,8 @@ dir.create(l)
 write(paste0(".libPaths(\"", l, "\")"), ".Rprofile", append = TRUE)
 
 message("  - Install deps")
-deps::create()
-deps::install(upgrade=TRUE)
+deps::create(ask = FALSE)
+deps::install(upgrade = TRUE)
 
 source("index.R")
 

@@ -1,9 +1,9 @@
 # deps
 
-> Dependency Management with roxygen-style Comments
+> Dependency Management with ‘roxygen’-Style Comments
 
 Manage your source code dependencies by decorating your existing R code
-with special, roxygen-style comments.
+with special, ‘roxygen’-style comments.
 
 [![Build
 status](https://github.com/analythium/deps/actions/workflows/check.yml/badge.svg)](https://github.com/analythium/deps/actions)
@@ -82,7 +82,7 @@ function. System dependencies are based on
 (Debian/Ubuntu) packages (but can be set to RPM).
 
 The packages list found by `renv::dependencies()` is refined and
-modified by roxygen-style comments. But the packages need to be
+modified by ‘roxygen’-style comments. But the packages need to be
 declared/used somewhere in the source code for the comments to take
 effect.
 
@@ -92,7 +92,7 @@ repositories used at the time of installation.
 
 ## Tags
 
-Tags are part of the [roxygen-style
+Tags are part of the [‘roxygen’-style
 comments](https://cran.r-project.org/package=roxygen2):
 
 ``` r
@@ -324,6 +324,22 @@ FROM ghcr.io/analythium/deps:latest
 ## Examples
 
 See the [`inst/examples`](./inst/examples/) folder for more examples.
+
+## Notes
+
+The deps package uses a 5 minutes timeout for downloads instead of the
+default 1 minute (`getOption("timeout")`). When the timeout option or
+the `R_DEFAULT_INTERNET_TIMEOUT` environment variable is set to a \>5
+minutes value, it will be respected and timeout will be set to the
+maximum of the three possible values.
+
+The platform for system requirements (e.g. the default `"DEB"` or
+`"RPM`) can be set via the `R_DEPS_PLATFORM` environment variable. The
+default value is `"DEB"`.
+
+The `create()` function prompts the user asking confirmation before
+writing the `dependencies.json` file. Use `create(ask = FALSE)` to
+bypass the prompt.
 
 ## License
 

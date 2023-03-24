@@ -9,23 +9,27 @@
 #
 # install_version will install tb$source=="ver"
 
-#' Create a Dependencies JSON File
+#' Install Dependencies
+#'
+#' Install dependencies from an existing `dependencies.json` file or after discovering the dependencies.
 #'
 #' @param dir Path to the directory where the JSON file should be written to.
 #' @param file The name of the file to be save, default is `"dependencies.json"`. If the file is not found in `dir`, `create()` is called.
 #' @param upgrade Should package dependencies be upgraded? Argument passed to remotes functions.
 #' @param cleanup Logical, clean up files created by `create()` when `file` does not exist.
 #' @param timeout Integer, timeout for file downloads (default 60 seconds can be short).
+#' @param ask Logical, asking confirmation before writing the `dependencies.json` file.
 #' @param ...  Other argument passed to remotes functions.
 #'
 #' @examples
-#' \dontrun{
 #' dir <- system.file("examples/01-basic", package = "deps")
 #' out <- tempdir()
-#' create(dir, output = out)
+#' create(dir, output = out, ask = interactive())
+#' cat(readLines(file.path(out, "dependencies.json")), sep = "\n")
+#' \dontrun{
 #' install(out)
-#' unlink(file.path(out, "dependencies.json"))
 #' }
+#' unlink(file.path(out, "dependencies.json"))
 #'
 #' @return Returns `NULL` invisibly. The side effect is the dependencies installed.
 #' @export
@@ -35,6 +39,7 @@ install <- function(
     upgrade = "never",
     cleanup = TRUE,
     timeout = 300L,
+    ask = TRUE,
     ...
 ) {
     uto <- suppressWarnings(
@@ -45,7 +50,7 @@ install <- function(
     on.exit(options(oo), add = TRUE)
     created <- file.exists(file.path(dir, file))
     if (!created) {
-        dfile <- create(dir = dir, file = file)
+        dfile <- create(dir = dir, file = file, ask = ask)
         if (cleanup)
             on.exit(unlink(dfile), add = TRUE)
     }

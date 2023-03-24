@@ -2,7 +2,7 @@
 % Please edit documentation in R/install.R
 \name{install}
 \alias{install}
-\title{Create a Dependencies JSON File}
+\title{Install Dependencies}
 \usage{
 install(
   dir = getwd(),
@@ -10,6 +10,7 @@ install(
   upgrade = "never",
   cleanup = TRUE,
   timeout = 300L,
+  ask = TRUE,
   ...
 )
 }
@@ -24,21 +25,24 @@ install(
 
 \item{timeout}{Integer, timeout for file downloads (default 60 seconds can be short).}
 
+\item{ask}{Logical, asking confirmation before writing the \code{dependencies.json} file.}
+
 \item{...}{Other argument passed to remotes functions.}
 }
 \value{
 Returns \code{NULL} invisibly. The side effect is the dependencies installed.
 }
 \description{
-Create a Dependencies JSON File
+Install dependencies from an existing \code{dependencies.json} file or after discovering the dependencies.
 }
 \examples{
-\dontrun{
 dir <- system.file("examples/01-basic", package = "deps")
 out <- tempdir()
-create(dir, output = out)
+create(dir, output = out, ask = interactive())
+cat(readLines(file.path(out, "dependencies.json")), sep = "\n")
+\dontrun{
 install(out)
-unlink(file.path(out, "dependencies.json"))
 }
+unlink(file.path(out, "dependencies.json"))
 
 }
