@@ -81,13 +81,13 @@ version <- function(...) {
 }
 
 create <- function(DIR, ...) {
-    deps::create(DIR, overwrite = FALSE, ask = FALSE)
+    try(deps::create(DIR, overwrite = FALSE, ask = FALSE))
     invisible(NULL)
 }
 
 sysreqs <- function(DIR, ...) {
     if (!file.exists(file.path(DIR, "dependencies.json"))) {
-        deps::create(DIR, output = tempdir(), ask = FALSE)
+        try(deps::create(DIR, output = tempdir(), ask = FALSE))
         depsfile <- file.path(tempdir(), "dependencies.json")
     } else {
         depsfile <- file.path(DIR, "dependencies.json")
@@ -106,13 +106,13 @@ sysreqs <- function(DIR, ...) {
 install <- function(DIR, UPGRADE, ...) {
     if (file.exists(file.path(DIR, "renv.lock"))) {
         options(renv.consent = TRUE)
-        renv::restore(DIR, lockfile = 'renv.lock', prompt = FALSE)
+        try(renv::restore(DIR, lockfile = 'renv.lock', prompt = FALSE))
     } else if (file.exists(file.path(DIR, "pkg.lock"))) {
-        pak::lockfile_install(file.path(DIR, "pkg.lock"), update = UPGRADE)
+        try(pak::lockfile_install(file.path(DIR, "pkg.lock"), update = UPGRADE))
     } else if (file.exists(file.path(DIR, "DESCRIPTION"))) {
-        remotes::install_deps(DIR, upgrade = UPGRADE)
+        try(remotes::install_deps(DIR, upgrade = UPGRADE))
     } else {
-        deps::install(DIR, upgrade = UPGRADE)
+        try(deps::install(DIR, upgrade = UPGRADE, ask = FALSE)
     }
     invisible(NULL)
 }
@@ -122,7 +122,7 @@ all <- function(DIR, UPGRADE, ...) {
         on.exit(unlink(file.path(DIR, "dependencies.json")))
     create(DIR, ask = FALSE)
     sysreqs(DIR)
-    install(DIR, UPGRADE, ...)
+    install(DIR, UPGRADE, ask = FALSE, ...)
     invisible(NULL)
 }
 
