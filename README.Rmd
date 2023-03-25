@@ -213,7 +213,7 @@ Usage of the CLI as explained in `deps-cli help`:
 
 🔗 See https://github.com/analythium/deps
 
-deps-cli is based on deps 0.0.2 2022-10-24 
+deps-cli is based on deps 0.1.2 2023-03-23 
 
 Usage: deps-cli <command> [options]
 
