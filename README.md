@@ -7,7 +7,6 @@ with special, ‘roxygen’-style comments.
 
 [![Build
 status](https://github.com/analythium/deps/actions/workflows/check.yml/badge.svg)](https://github.com/analythium/deps/actions)
-
 [![CRAN
 version](http://www.r-pkg.org/badges/version/deps)](https://CRAN.R-project.org/package=deps)
 [![CRAN RStudio mirror
