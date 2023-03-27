@@ -10,16 +10,16 @@ NOW <- Sys.time()
 
 suppressMessages({
     if (!requireNamespace("deps")) {
-        install.packages(c("rconfig", "deps", "remotes", "pak", "renv"),
-            repos = c("https://cloud.r-project.org", "https://analythium.r-universe.dev"))
+        install.packages(c("rconfig", "deps", "remotes", "pak", "renv"))
     }
 })
 
 CONFIG <- rconfig::rconfig()
 CMD <- rconfig::command(CONFIG)
-DIR <- rconfig::value(CONFIG$dir, getwd())
-UPGRADE <- rconfig::value(CONFIG$upgrade, FALSE)
-SILENT <- rconfig::value(CONFIG$silent, FALSE)
+DIR <- rconfig::value(CONFIG[["dir"]], getwd())
+UPGRADE <- rconfig::value(CONFIG[["upgrade"]], FALSE)
+SILENT <- rconfig::value(CONFIG[["silent"]], FALSE)
+FROMFILE <- rconfig::value(CONFIG[["from-file"]], FALSE)
 
 HEADER <- '
 🚀 Quickly install R package dependencies on the command line
@@ -55,6 +55,7 @@ Options:
   --dir DIR             Directory to scan, defaults to .
   --upgrade             Upgrade package dependencies
   --silent              Silent, no info printed
+  --from-file           Install only from lock/dependency file
 
 Examples:
   deps-cli help
@@ -62,7 +63,7 @@ Examples:
   deps-cli create
   deps-cli create --silent
   deps-cli sysreqs
-  deps-cli install --dir /root/app
+  deps-cli install --from-file
   deps-cli all --dir /root/app --upgrade
 
 '
@@ -103,8 +104,10 @@ sysreqs <- function(DIR, ...) {
     invisible(NULL)
 }
 
-install <- function(DIR, UPGRADE, ...) {
-    if (file.exists(file.path(DIR, "renv.lock"))) {
+install <- function(DIR, UPGRADE, FROMFILE, ...) {
+    if (file.exists(file.path(DIR, "dependencies.json"))) {
+        try(deps::install(DIR, upgrade = UPGRADE, ask = FALSE)
+    } else if (file.exists(file.path(DIR, "renv.lock"))) {
         options(renv.consent = TRUE)
         try(renv::restore(DIR, lockfile = 'renv.lock', prompt = FALSE))
     } else if (file.exists(file.path(DIR, "pkg.lock"))) {
@@ -112,17 +115,18 @@ install <- function(DIR, UPGRADE, ...) {
     } else if (file.exists(file.path(DIR, "DESCRIPTION"))) {
         try(remotes::install_deps(DIR, upgrade = UPGRADE))
     } else {
-        try(deps::install(DIR, upgrade = UPGRADE, ask = FALSE)
+        if (!FROMFILE)
+            try(deps::install(DIR, upgrade = UPGRADE, ask = FALSE)
     }
     invisible(NULL)
 }
 
-all <- function(DIR, UPGRADE, ...) {
+all <- function(DIR, UPGRADE, FROMFILE, ...) {
     if (!file.exists(file.path(DIR, "dependencies.json")))
         on.exit(unlink(file.path(DIR, "dependencies.json")))
     create(DIR, ask = FALSE)
     sysreqs(DIR)
-    install(DIR, UPGRADE, ask = FALSE, ...)
+    install(DIR, UPGRADE, FROMFILE, ask = FALSE, ...)
     invisible(NULL)
 }
 
@@ -144,7 +148,7 @@ if (!SILENT) {
         version()
     }
 }
-FUN[[CMD]](DIR, UPGRADE)
+FUN[[CMD]](DIR, UPGRADE, FROMFILE)
 if (!SILENT && CMD %in% c("sysreqs", "install", "all")) {
     if (CMD != "version") {
         version()
