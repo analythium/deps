@@ -106,7 +106,7 @@ sysreqs <- function(DIR, ...) {
 
 install <- function(DIR, UPGRADE, FROMFILE, ...) {
     if (file.exists(file.path(DIR, "dependencies.json"))) {
-        try(deps::install(DIR, upgrade = UPGRADE, ask = FALSE)
+        try(deps::install(DIR, upgrade = UPGRADE, ask = FALSE))
     } else if (file.exists(file.path(DIR, "renv.lock"))) {
         options(renv.consent = TRUE)
         try(renv::restore(DIR, lockfile = 'renv.lock', prompt = FALSE))
@@ -116,7 +116,7 @@ install <- function(DIR, UPGRADE, FROMFILE, ...) {
         try(remotes::install_deps(DIR, upgrade = UPGRADE))
     } else {
         if (!FROMFILE)
-            try(deps::install(DIR, upgrade = UPGRADE, ask = FALSE)
+            try(deps::install(DIR, upgrade = UPGRADE, ask = FALSE))
     }
     invisible(NULL)
 }
