@@ -5,6 +5,7 @@ Dockerfile
 JSON
 MRAN
 ORCID
+RStudio
 bz
 cli
 funder

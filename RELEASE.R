@@ -22,7 +22,7 @@ library(rhub)
 platforms()
 f <- c("debian-gcc-devel",
        "debian-gcc-release",
-       "macos-highsierra-release-cran",
+    #    "macos-highsierra-release-cran",
        "windows-x86_64-devel",
        "windows-x86_64-release",
        "windows-x86_64-oldrel")
