@@ -1,6 +1,7 @@
-# Version 0.1.3
+# Version 0.2.0
 
-* ...
+* Several small fixes to make functionality robust against missing files.
+* Updates to the command line example that lacked a closing parenthesis and failed.
 
 # Version 0.1.2
 
