@@ -22,6 +22,6 @@ navbar:
       aria-label: Twitter
     github:
       icon: fa-github
-      href: http://github.com/analythium
+      href: http://github.com/analythium/deps
       aria-label: GitHub
 
