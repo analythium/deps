@@ -239,7 +239,7 @@ file afterwards, leaving no trace.
 ## deps-cli
 
 A CLI example is given in
-[`inst/examples/02-cli`](./inst/examples/02-cli/):
+[`inst/examples/03-cli`](./inst/examples/03-cli/):
 
 ``` bash
 cp inst/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli
