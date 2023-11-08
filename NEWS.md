@@ -1,3 +1,7 @@
+# Version 0.2.1
+
+* R versions updated with new releases.
+
 # Version 0.2.0
 
 * Several small fixes to make functionality robust against missing files.
