@@ -1,8 +1,7 @@
 Package: deps
 Type: Package
 Title: Dependency Management with 'roxygen'-Style Comments
-Version: 0.2.0
-Date: 2023-06-26
+Version: 0.2.1
 Authors@R: c(
   person(given = "Peter",
     family = "Solymos",
