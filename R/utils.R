@@ -102,10 +102,6 @@ process_tag <- function(
 #' Get dependencies
 #'
 #' @param dir Directory to explore.
-#' @param platform The platform supplied to `sysreqs()`.
-#'   It can be `NULL` when the value of the R_DEPS_PLATFORM environment variable is used when set,
-#'   defaults to `"DEB"` when R_DEPS_PLATFORM is unset.
-#'   It can be `NA` in which case no system requirements are returned.
 #' @param installed The `priority` argument for `installed.packages()`.
 #' @param dev Logical, include 'development' dependencies as well for `renv::dependencies()`.
 #'
@@ -113,7 +109,6 @@ process_tag <- function(
 #' @noRd
 get_deps <- function(
     dir = getwd(),
-    platform = NULL,
     installed = c("base", "recommended"),
     dev = TRUE
 ) {
@@ -164,9 +159,7 @@ get_deps <- function(
             tb[i, "remote"] <- rems[j]
         }
     }
-    sysreq <- sysreqs(all[!tb$dev], platform = platform)
-    extra_sys <- unique(unlist(tagged_deps$sys))
-    sysreqs <- sort(union(sysreq, extra_sys))
+    sysreqs <- sort(unique(unlist(tagged_deps$sys)))
     sysreqs <- sysreqs[nzchar(sysreqs)]
     attr(tb, "sysreqs") <- if (is.null(sysreqs))
         character(0) else sysreqs
@@ -234,44 +227,6 @@ write_deps <- function(
     } else {
         writeLines(jsonlite::toJSON(l, pretty = TRUE), file.path(dir, file))
     }
-}
-
-#' Get System Requirements
-#'
-#' @param pkg Character, packages for which system requirements are needed.
-#' @param platform Character, the platform to be filtered for 
-#'   (e.g. `"DEB"`, `"RPM`, etc. see <https://sysreqs.r-hub.io/>). 
-#'   It can be `NULL` when the value of the R_DEPS_PLATFORM environment variable is used when set,
-#'   defaults to `"DEB"` when R_DEPS_PLATFORM is unset.
-#'   It can be `NA` in which case no system requirements are returned.
-#'
-#' @examples
-#' sysreqs("igraph")
-#' sysreqs("igraph", platform = "RPM")
-#'
-#' @return A character vector.
-#' @noRd
-sysreqs <- function(pkg, platform = NULL) {
-    if (is.null(platform)) {
-        PLATFORM <- Sys.getenv("R_DEPS_PLATFORM")
-        platform <- if (PLATFORM == "")
-            "DEB" else PLATFORM
-    }
-    if (missing(pkg) || is.na(platform))
-        return(character(0))
-    j <- try(suppressWarnings(jsonlite::fromJSON(
-        sprintf("https://sysreqs.r-hub.io/pkg/%s",
-            paste0(as.character(pkg), collapse = ",")),
-        simplifyVector = FALSE)), silent = TRUE)
-    if (inherits(j, "try-error"))
-        return(NULL)
-    v <- unlist(j)
-    s <- sort(unique(unname(v[grep(paste0("\\.", platform), names(v))])))
-    if (!is.null(s)) {
-        s <- unlist(strsplit(s, "[[:space:]]"))
-        s <- sort(unique(unname(s[nchar(s) > 0])))
-    }
-    s
 }
 
 #' R versions

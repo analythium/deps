@@ -81,9 +81,8 @@ project folder or using and existing `dependencies.json` file.
 
 Required packages are found using the
 [`renv::dependencies()`](https://rstudio.github.io/renv/reference/dependencies.html)
-function. System dependencies are based on
-[sysreqs.r-hub.io](https://sysreqs.r-hub.io) with a focus on DEB
-(Debian/Ubuntu) packages (but can be set to RPM).
+function. System dependencies can be specified as well, but are not
+actively sought out.
 
 The packages list found by `renv::dependencies()` is refined and
 modified by ‘roxygen’-style comments. But the packages need to be
@@ -128,10 +127,8 @@ can be separated by commas:
 #' @sys curl,git
 ```
 
-These packages are added to the list of requirements identified by the
-[sysreqs.r-hub.io](https://sysreqs.r-hub.io) database for the
-non-development packages. The platform (e.g. the default `"DEB"` or
-`"RPM`) can be set via the `R_DEPS_PLATFORM` environment variable.
+These packages are added to the list of requirements for the
+non-development packages.
 
 #### Remote sources
 
@@ -192,14 +189,6 @@ installation:
 #' @repos http://cran.r-project.org,https://psolymos.r-universe.dev
 ```
 
-Use the `@repos` tag to set an
-[MRAN](https://mran.microsoft.com/documents/rro/reproducibility)
-checkpoint:
-
-``` r
-#' @repos https://mran.microsoft.com/snapshot/2020-01-01
-```
-
 #### Versioned packages
 
 When CRAN packages require specific a version, use the `@ver` tag
@@ -224,11 +213,9 @@ minor/patch version will be used. Use dots as separators.
 
 The `create()` function will crawl the project directory for package
 dependencies. It will amend the dependency list and package sources
-based on the comments and query system requirements for the packages
-where those requirements are known for a particular platform. The
-summary is written into the `dependencies.json` file. Optionally, the
-system requirements are written into the `dependencies.json` file as
-well.
+based on the comments. The summary is written into the
+`dependencies.json` file. Optionally, the system requirements are
+written into the `dependencies.json` file as well.
 
 `install()` will look for the `dependencies.json` file in the root of
 the project directory and perform dependency installation if the file
@@ -302,7 +289,6 @@ In a Dockerfile you can:
 
 ``` dockerfile
 FROM eddelbuettel/r2u:22.04
-ENV R_DEPS_PLATFORM="DEB"
 RUN R -q -e "install.packages(c('rconfig', 'deps', 'remotes', 'pak', 'renv'), repos = c('https://cloud.r-project.org', 'https://analythium.r-universe.dev'))"
 RUN cp -p $(R RHOME)/library/deps/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli
 RUN chmod +x /usr/local/bin/deps-cli
@@ -312,10 +298,6 @@ COPY ... # your files
 RUN deps-cli all
 ...
 ```
-
-Use the `R_DEPS_PLATFORM` environment variable to define system
-dependencies (e.g. `"RPM"`) if not using an image where those are
-automatically resolved (like the `eddelbuettel/r2u`).
 
 You can simply use the `ghcr.io/analythium/deps:latest` as your parent
 image where the `deps-cli` is already installed:
@@ -336,10 +318,6 @@ default 1 minute (`getOption("timeout")`). When the timeout option or
 the `R_DEFAULT_INTERNET_TIMEOUT` environment variable is set to a \>5
 minutes value, it will be respected and timeout will be set to the
 maximum of the three possible values.
-
-The platform for system requirements (e.g. the default `"DEB"` or
-`"RPM`) can be set via the `R_DEPS_PLATFORM` environment variable. The
-default value is `"DEB"`.
 
 The `create()` function prompts the user asking confirmation before
 writing the `dependencies.json` file. Use `create(ask = FALSE)` to

@@ -11,6 +11,7 @@ Manage your source code dependencies by decorating your existing R code with spe
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://hub.analythium.io/deps/}
   \item \url{https://github.com/analythium/deps}
   \item Report bugs at \url{https://github.com/analythium/deps/issues}
 }

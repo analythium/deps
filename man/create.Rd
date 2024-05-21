@@ -8,7 +8,6 @@ create(
   dir = getwd(),
   file = "dependencies.json",
   output = dir,
-  platform = NULL,
   installed = c("base", "recommended"),
   overwrite = TRUE,
   ask = TRUE
@@ -20,11 +19,6 @@ create(
 \item{file}{The name of the file to be save, default is \code{"dependencies.json"}.}
 
 \item{output}{Path to the directory where JSON file should be written to.}
-
-\item{platform}{The platform supplied to \code{sysreqs()}.
-It can be \code{NULL} when the value of the R_DEPS_PLATFORM environment variable is used when set,
-defaults to \code{"DEB"} when R_DEPS_PLATFORM is unset.
-It can be \code{NA} in which case no system requirements are returned.}
 
 \item{installed}{The \code{priority} argument for \code{installed.packages()} for packages to be excluded.}
 
