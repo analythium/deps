@@ -1,5 +1,6 @@
-# Version 0.2.1
+# Version 0.3.0
 
+* `sysreqs` function removed due to archival of the sysreqs database it relied on.
 * R versions updated with new releases.
 
 # Version 0.2.0
