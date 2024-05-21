@@ -18,10 +18,10 @@ navbar:
   components:
     twitter:
       icon: fa-twitter
-      href: http://twitter.com/analythium
+      href: https://twitter.com/analythium
       aria-label: Twitter
     github:
       icon: fa-github
-      href: http://github.com/analythium/deps
+      href: https://github.com/analythium/deps
       aria-label: GitHub
 
