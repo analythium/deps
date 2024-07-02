@@ -286,15 +286,16 @@
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="ex">deps-cli</span> create <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> sysreqs <span class="kw">&amp;&amp;</span> <span class="ex">deps-cli</span> install</span></code></pre></div>
 <p><code>deps-cli install</code> looks for the following files before attempting to detect dependencies: <code>renv.lock</code>, <code>pkg.lock</code>, and <code>DESCRIPTION</code>.</p>
 <p>In a Dockerfile you can:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="kw">FROM</span> eddelbuettel/r2u:22.04</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">R</span> <span class="at">-q</span> <span class="at">-e</span> <span class="st">"install.packages(c('rconfig', 'deps', 'remotes', 'pak', 'renv'), repos = c('https://cloud.r-project.org', 'https://analythium.r-universe.dev'))"</span></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">cp</span> <span class="at">-p</span> <span class="va">$(</span><span class="ex">R</span> RHOME<span class="va">)</span>/library/deps/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">chmod</span> +x /usr/local/bin/deps-cli</span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="kw">COPY</span> ... <span class="co"># your files</span></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">deps-cli</span> all</span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>...</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="kw">FROM</span> rocker/r2u:24.04</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">install.r</span> remotes renv pak rconfig jsonlite yaml deps</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">installGithub.r</span> analythium/deps</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">cp</span> <span class="at">-p</span> <span class="va">$(</span><span class="ex">R</span> RHOME<span class="va">)</span>/library/deps/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">chmod</span> +x /usr/local/bin/deps-cli</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="kw">COPY</span> ... <span class="co"># your files</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">deps-cli</span> all</span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>...</span></code></pre></div>
 <p>You can simply use the <code>ghcr.io/analythium/deps:latest</code> as your parent image where the <code>deps-cli</code> is already installed:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="kw">FROM</span> ghcr.io/analythium/deps:latest</span>
 <span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>...</span></code></pre></div>
