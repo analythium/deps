@@ -1,7 +1,7 @@
 Package: deps
 Type: Package
 Title: Dependency Management with 'roxygen'-Style Comments
-Version: 0.3.1
+Version: 0.4.0
 Authors@R: c(
   person(given = "Peter",
     family = "Solymos",
@@ -18,7 +18,8 @@ LazyLoad: yes
 Imports:
   renv,
   jsonlite,
-  remotes
+  remotes,
+  rmarkdown
 RoxygenNote: 7.3.1
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

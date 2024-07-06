@@ -29,7 +29,7 @@ is_rscript <- function(
 #' @noRd
 deps_list_r <- function(
     path = ".",
-    ext = c("R", "Rmd", "Rnw"),
+    ext = c("R", "Rmd", "Rnw", "qmd"),
     shebang = TRUE
 ) {
     if (!dir.exists(path))
@@ -128,6 +128,7 @@ get_deps <- function(
         rver   = process_tag(x, "rver"))
     installed <- rownames(utils::installed.packages(priority = installed))
     dp <- renv::dependencies(path = dir,
+        root = NULL,
         progress = FALSE,
         dev = dev)[,c("Source", "Package")]
     all <- sort(unique(dp$Package))
@@ -317,4 +318,10 @@ install_any <- function(x, ...) {
   }
   lapply(x, f, ...)
   invisible(NULL)
+}
+
+# rmarkdown package is required in order to crawl dependencies in R Markdown files.
+# @noRd
+render <- function(...) {
+    rmarkdown::render(...)
 }
