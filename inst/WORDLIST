@@ -5,12 +5,14 @@ Dockerfile
 JSON
 ORCID
 RStudio
+Rmd
 bz
 cli
 funder
 gz
 packrat
 pak
+qmd
 renv
 repo
 repos
