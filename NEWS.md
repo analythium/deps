@@ -1,7 +1,6 @@
 # Version 0.4.0
 
 * R versions updated with new release 4.4.1.
-* Imports from rmarkdown so that renv can crawl Rmd files.
 * Support Quarto (qmd) files.
 
 # Version 0.3.0

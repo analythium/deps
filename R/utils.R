@@ -46,7 +46,13 @@ deps_list_r <- function(
             i[j[k]] <- TRUE
         }
     }
-    fl[i]
+    fl <- fl[i]
+    if (any(c("rmd", "qmd") %in% tolower(tools::file_ext(fl)))) {
+        if (!("rmarkdown" %in% rownames(utils::installed.packages()))) {
+            stop("The 'rmarkdown' package is required in to crawl dependencies in R Markdown and Quarto files.", call. = FALSE)
+        }
+    }
+    fl
 }
 
 #' Find tag
@@ -318,10 +324,4 @@ install_any <- function(x, ...) {
   }
   lapply(x, f, ...)
   invisible(NULL)
-}
-
-# rmarkdown package is required in order to crawl dependencies in R Markdown files.
-# @noRd
-render <- function(...) {
-    rmarkdown::render(...)
 }
