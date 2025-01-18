@@ -1,8 +1,8 @@
-pandoc: 3.2.1
-pkgdown: 2.1.0
+pandoc: 3.6.2
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2024-07-07T14:48Z
+last_built: 2025-01-18T23:45Z
 urls:
   reference: https://hub.analythium.io/deps/reference
   article: https://hub.analythium.io/deps/articles
