@@ -1,7 +1,10 @@
 #!/usr/bin/env Rscript
 
-# Setup:
+# Copy local file:
 #     cp inst/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli
+#     chmod +x /usr/local/bin/deps-cli
+# Or download:
+#     curl -fsSL https://hub.analythium.io/deps/deps-cli.R -o /usr/local/bin/deps-cli
 #     chmod +x /usr/local/bin/deps-cli
 # Now you can use it as explained in deps-cli help, e.g.:
 #     deps-cli create && deps-cli sysreqs && deps-cli install
@@ -10,6 +13,7 @@ NOW <- Sys.time()
 
 suppressMessages({
     if (!requireNamespace("deps")) {
+        message("Installing deps's dependencies ...")
         install.packages(c("rconfig", "deps", "remotes", "pak", "renv"))
     }
 })
@@ -24,7 +28,7 @@ FROMFILE <- rconfig::value(CONFIG[["from-file"]], FALSE)
 HEADER <- '
 🚀 Quickly install R package dependencies on the command line
 
-👉 MIT (c) Analythium Solutions Inc. 2022-2023
+👉 MIT (c) Analythium Solutions Inc. 2022-2025
           _                           _ _ 
        __| | ___ _ __  ___        ___| (_)
       / _` |/ _ \\ \'_ \\/ __|_____ / __| | |

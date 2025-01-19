@@ -233,6 +233,14 @@ cp inst/examples/03-cli/deps-cli.R /usr/local/bin/deps-cli
 chmod +x /usr/local/bin/deps-cli
 ```
 
+You can download the CLI script from the web, it will install deps and
+other required R packages on its first usage:
+
+``` bash
+curl -fsSL https://hub.analythium.io/deps/deps-cli.R -o /usr/local/bin/deps-cli
+chmod +x /usr/local/bin/deps-cli
+```
+
 Usage of the CLI as explained in `deps-cli help`:
 
     🚀 Quickly install R package dependencies on the command line
@@ -300,8 +308,9 @@ RUN deps-cli all
 ...
 ```
 
-You can simply use the `ghcr.io/analythium/deps:latest` as your parent
-image where the `deps-cli` is already installed:
+Or simply use the
+\[\]`ghcr.io/analythium/deps:latest`\](<https://github.com/analythium/deps/pkgs/container/deps>)
+as your parent image where the `deps-cli` is already installed:
 
 ``` dockerfile
 FROM ghcr.io/analythium/deps:latest
