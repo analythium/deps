@@ -24,10 +24,13 @@ jobs:
           Rscript -e 'install.packages(c("pkgdown", "devtools"))'
           Rscript -e 'devtools::install_dev_deps()'
       - name: Check package
-        run: Rscript -e 'devtools::check()'
+        run: |
+          Rscript -e 'devtools::check()'
 
       - name: Build site
-        run: Rscript -e 'pkgdown::build_site_github_pages(install=TRUE)'
+        run: |
+          Rscript -e 'pkgdown::build_site_github_pages(install=TRUE)'
+          cp ./inst/examples/03-cli/deps-cli.R docs/deps-cli.R
 
       - name: Deploy site
         uses: JamesIves/github-pages-deploy-action@v4
