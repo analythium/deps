@@ -309,7 +309,7 @@ RUN deps-cli all
 ```
 
 Or simply use the
-\[\]`ghcr.io/analythium/deps:latest`\](<https://github.com/analythium/deps/pkgs/container/deps>)
+[`ghcr.io/analythium/deps:latest`](<https://github.com/analythium/deps/pkgs/container/deps>)
 as your parent image where the `deps-cli` is already installed:
 
 ``` dockerfile
