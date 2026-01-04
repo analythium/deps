@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.4.1
+
+- R versions are accessed through a JSON API to avoid missed updates.
+
 ## Version 0.4.0
 
 CRAN release: 2024-07-07

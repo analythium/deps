@@ -13,12 +13,12 @@ Source:
 [`DESCRIPTION`](https://github.com/analythium/deps/blob/main/DESCRIPTION)
 
 Solymos P (2026). *deps: Dependency Management with 'roxygen'-Style
-Comments*. R package version 0.4.0, <https://hub.analythium.io/deps/>.
+Comments*. R package version 0.4.1, <https://hub.analythium.io/deps/>.
 
     @Manual{,
       title = {deps: Dependency Management with 'roxygen'-Style Comments},
       author = {Peter Solymos},
       year = {2026},
-      note = {R package version 0.4.0},
+      note = {R package version 0.4.1},
       url = {https://hub.analythium.io/deps/},
     }
