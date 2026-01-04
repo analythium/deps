@@ -1,3 +1,7 @@
+# Version 0.4.1
+
+* R versions are accessed through a JSON API to avoid missed updates.
+
 # Version 0.4.0
 
 * R versions updated with new release 4.4.1.
