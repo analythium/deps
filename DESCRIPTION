@@ -18,8 +18,7 @@ LazyLoad: yes
 Imports:
   renv,
   jsonlite,
-  remotes,
-  rversions
+  remotes
 RoxygenNote: 7.3.1
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

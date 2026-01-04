@@ -285,7 +285,11 @@ write_deps <- function(
 #' @noRd
 # dput(rversions::r_versions()[,1:2])
 rversions <- function() {
-    rversions::r_versions()[, 1:2]
+    # rversions::r_versions()[, 1:2]
+    v <- jsonlite::fromJSON("https://api.r-hub.io/rversions/r-versions")
+    d <- as.data.frame(v)[, c("version", "date")]
+    d$date <- as.Date(substr(d$date, 1L, 10L))
+    d
 }
 
 install_any <- function(x, ...) {
