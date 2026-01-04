@@ -2,7 +2,6 @@ Analythium
 CLI
 Dev
 Dockerfile
-JSON
 ORCID
 RStudio
 bz
@@ -13,9 +12,6 @@ packrat
 pak
 qmd
 renv
-repo
-repos
-reproducibility
 rmarkdown
 roxygen
 roxygen’

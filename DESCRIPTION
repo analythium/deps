@@ -19,7 +19,7 @@ Imports:
   renv,
   jsonlite,
   remotes
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 BugReports: https://github.com/analythium/deps/issues
