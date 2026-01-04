@@ -17,7 +17,7 @@
 #' unlink(file.path(out, "dependencies.json"))
 #'
 #' @return Invisibly returns the list of file names that were created. The side effect is a JSON (and possibly a text for system requirements) file written to the hard drive. The function fails when there are no R related files in `dir`.
-#' 
+#'
 #' @export
 create <- function(
     dir = getwd(),
@@ -29,17 +29,19 @@ create <- function(
 ) {
     if (ask) {
         cat("Do you want the dependencies.json file to be saved?")
-        if (utils::menu(c("Yes", "No")) != 1L){
+        if (utils::menu(c("Yes", "No")) != 1L) {
             return(invisible())
         }
     }
     d <- get_deps(
         dir = dir,
-        installed = installed)
+        installed = installed
+    )
     write_deps(
         d,
         dir = output,
         file = file,
-        overwrite = overwrite)
+        overwrite = overwrite
+    )
     invisible(file.path(output, file))
 }
